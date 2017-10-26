@@ -38,7 +38,7 @@ namespace _3DGraphics
             this.elements.Add(new PalmTree(this.Content, new Vector3(-10, 0, 0), -0.2f, 0.5f, 0));
             this.elements.Add(new PalmTree(this.Content, new Vector3(10, 0, 0), 0, 0, -0.3f));
             // add island
-            this.elements.Add(new Island(5, graphics.GraphicsDevice, new Vector3(0, 0, 0), 0, 0, 0));
+            this.elements.Add(new Island(10, 15, graphics.GraphicsDevice, new Vector3(0, -10, 0), 0, 0, 0));
 
             base.Initialize();
         }
