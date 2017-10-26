@@ -20,10 +20,10 @@ namespace _3DGraphics
         private DateTime lastUpdate;
         private Matrix world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
         private Vector3 cameraTarget = new Vector3(0, 0, 0);
-        private Vector3 cameraPosition = new Vector3(0, 40, 20);
+        private Vector3 cameraPosition = new Vector3(0, 0, 50);
         private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
         private Matrix view;
-        private List<PalmTree> trees = new List<PalmTree>();
+        private List<ObjectBase> elements = new List<ObjectBase>();
 
         public XnaFun()
         {
@@ -41,8 +41,12 @@ namespace _3DGraphics
         {
             // TODO: Add your initialization logic here
             this.effect = new BasicEffect(graphics.GraphicsDevice);
-            this.trees.Add(new PalmTree(this.Content, new Vector3(0, 0, 0)));
-            this.trees.Add(new PalmTree(this.Content, new Vector3(10, 0, 20)));
+            // add palm trees
+            this.elements.Add(new PalmTree(this.Content, new Vector3(-10, 0, 0), -0.2f, 0.5f, 0));
+            this.elements.Add(new PalmTree(this.Content, new Vector3(10, 0, 0), 0, 0, -0.3f));
+            // add island
+            this.elements.Add(new Island(5, graphics.GraphicsDevice, new Vector3(0, 0, 0), 0, 0, 0));
+
             base.Initialize();
         }
 
@@ -144,7 +148,7 @@ namespace _3DGraphics
             //    // TODO: Add your drawing code here
             //}
 
-            this.trees.ForEach(e => e.Draw(this.view, this.projection));
+            this.elements.ForEach(e => e.Draw(this.view, this.projection));
 
             base.Draw(gameTime);
         }
