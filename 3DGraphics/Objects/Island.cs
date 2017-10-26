@@ -12,25 +12,42 @@ namespace _3DGraphics.Objects
 {
     class Island : ObjectBase
     {
-        VertexPositionColor[] vetices = new VertexPositionColor[24];
+        private VertexPositionColor[] vetices;
         private BasicEffect effect;
+        private const int degree = 30;
 
         public Island(float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
         {
-            //for(var i = 0; i <3; i++)
-            //{
-                var v1 = position + new Vector3(radius, 0, 0);
-                var v2 = Vector3.Transform(v1, Matrix.CreateRotationY(MathHelper.ToRadians(30)));
-                var v3 = Vector3.Transform(v1, Matrix.CreateRotationZ(MathHelper.ToRadians(10)));
-                var v4 = Vector3.Transform(v3, Matrix.CreateRotationY(MathHelper.ToRadians(30)));
             this.effect = new BasicEffect(dev);
-            this.vetices[0] = new VertexPositionColor(v1, Color.White);
-            this.vetices[1] = new VertexPositionColor(v2, Color.White);
-            this.vetices[2] = new VertexPositionColor(v4, Color.White);
-            this.vetices[3] = new VertexPositionColor(v1, Color.White);
-            this.vetices[4] = new VertexPositionColor(v3, Color.White);
-            this.vetices[5] = new VertexPositionColor(v4, Color.White);
-            //}
+            var fragmentVertices = new List<Vector3>(90/degree);
+            var v1 = new Vector3(radius, 0, 0);
+
+            this.vetices = new VertexPositionColor[90/degree * 6 * 360/degree];
+            //generate fragment
+            for (var i = 0; i < 90/degree; i++)
+            {
+                fragmentVertices.Add(Vector3.Transform(v1, Matrix.CreateRotationZ(MathHelper.ToRadians(degree * i))));
+            }
+
+            for (var i = 0; i < 360/degree; i++)
+            {
+                var f1 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians(i * degree)))).ToList();
+                var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i+1) * degree)))).ToList();
+
+                for (var j = 0; j < 90 / degree; j++)
+                {
+                    var currentVertexNumber = i * 90 / degree * 6 + j * 6;
+                    this.vetices[currentVertexNumber] = new VertexPositionColor(f1[0], Color.White);
+                    this.vetices[currentVertexNumber + 1] = new VertexPositionColor(f2[0], Color.White);
+                    this.vetices[currentVertexNumber + 2] = new VertexPositionColor(f1[1], Color.White);
+
+                    this.vetices[currentVertexNumber + 3] = new VertexPositionColor(f1[0], Color.White);
+                    this.vetices[currentVertexNumber + 4] = new VertexPositionColor(f1[0], Color.White);
+                    this.vetices[currentVertexNumber + 5] = new VertexPositionColor(f1[0], Color.White);
+                }
+
+
+            }
 
         }
 

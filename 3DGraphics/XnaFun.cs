@@ -13,16 +13,10 @@ namespace _3DGraphics
     public class XnaFun : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        private Model model;
-        private BasicEffect effect;
-        private float speed = 10;
         private DateTime lastUpdate;
-        private Matrix world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-        private Vector3 cameraTarget = new Vector3(0, 0, 0);
-        private Vector3 cameraPosition = new Vector3(0, 0, 50);
-        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
-        private Matrix view;
+        private Camera camera = new Camera(new Vector3(0, 0, 50));
+
+
         private List<ObjectBase> elements = new List<ObjectBase>();
 
         public XnaFun()
@@ -40,7 +34,6 @@ namespace _3DGraphics
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.effect = new BasicEffect(graphics.GraphicsDevice);
             // add palm trees
             this.elements.Add(new PalmTree(this.Content, new Vector3(-10, 0, 0), -0.2f, 0.5f, 0));
             this.elements.Add(new PalmTree(this.Content, new Vector3(10, 0, 0), 0, 0, -0.3f));
@@ -57,7 +50,6 @@ namespace _3DGraphics
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
@@ -78,24 +70,15 @@ namespace _3DGraphics
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             var frameTime = DateTime.Now - this.lastUpdate;
+            if (frameTime.TotalMilliseconds == 0) return;
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            var step = this.cameraTarget - this.cameraPosition;
-            step.Normalize();
-            step = Vector3.Multiply(step, (float)(this.speed / frameTime.TotalMilliseconds));
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                this.cameraPosition += step;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                this.cameraPosition -= step;
-            }
+            this.camera.Move(frameTime);
+            
             this.lastUpdate = DateTime.Now;
             base.Update(gameTime);
         }
@@ -107,48 +90,9 @@ namespace _3DGraphics
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            this.view = Matrix.CreateLookAt(this.cameraPosition, this.cameraTarget, Vector3.UnitY);
-            //var cameraPosition = new Vector3(0, 40, 20);
-            //var cameraLookAtVector = Vector3.Zero;
-            //var cameraUpVector = Vector3.UnitZ;
+            this.camera.Draw();
 
-            //effect.View = Matrix.CreateLookAt(cameraPosition, cameraLookAtVector, cameraUpVector);
-            //GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            //var floorVerts = new VertexPositionTexture[3];
-
-            //floorVerts[0].Position = new Vector3(-10, 0, 0);
-            //floorVerts[1].Position = new Vector3(0, 10, 0);
-            //floorVerts[2].Position = new Vector3(10, 0, 0);
-
-
-            //float aspectRatio = graphics.PreferredBackBufferWidth / (float)graphics.PreferredBackBufferHeight;
-            //float fieldOfView = MathHelper.PiOver4;
-            //float nearClipPlane = 1;
-            //float farClipPlane = 200;
-
-            //effect.Projection = Matrix.CreatePerspectiveFieldOfView(
-            //    fieldOfView, aspectRatio, nearClipPlane, farClipPlane);
-
-
-            //foreach (var pass in effect.CurrentTechnique.Passes)
-            //{
-            //    pass.Apply();
-
-            //    graphics.GraphicsDevice.DrawUserPrimitives(
-            //    // We’ll be rendering two trinalges
-            //    PrimitiveType.TriangleList,
-            //    // The array of verts that we want to render
-            //    floorVerts,
-            //    // The offset, which is 0 since we want to start 
-            //    // at the beginning of the floorVerts array
-            //    0,
-            //    // The number of triangles to draw
-            //    1);
-            //    // TODO: Add your drawing code here
-            //}
-
-            this.elements.ForEach(e => e.Draw(this.view, this.projection));
+            this.elements.ForEach(e => e.Draw(this.camera.View, this.camera.Projection));
 
             base.Draw(gameTime);
         }
