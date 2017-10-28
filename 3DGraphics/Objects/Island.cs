@@ -10,42 +10,39 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace _3DGraphics.Objects
 {
-    class Island : ObjectBase
+    class Island : VertexObject
     {
-        private VertexPositionColor[] vetices;
-        private BasicEffect effect;
         private int degree;
 
-        public Island(int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
+        public Island(float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(dev, position, xRotation, yRotation, zRotation)
         {
             this.degree = degree;
-            this.effect = new BasicEffect(dev);
             var fragmentVertices = new List<Vector3>(90 / degree + 1);
             var v1 = new Vector3(radius, 0, 0);
 
-            this.vetices = new VertexPositionColor[(360/degree + 1) * (90 / degree + 1) * 6];
+            this.vertices = new VertexPositionColor[(360 / degree + 1) * (90 / degree + 1) * 6];
             //generate fragment
             for (var i = 0; i <= 90 / degree; i++)
             {
-                fragmentVertices.Add(Vector3.Transform(v1, Matrix.CreateRotationZ(MathHelper.ToRadians(degree * i))));
+                fragmentVertices.Add(Vector3.Multiply(Vector3.Transform(v1, Matrix.CreateRotationZ(MathHelper.ToRadians(degree * i))), 1 - curvyness * (float)Math.Sin(MathHelper.ToRadians(i * degree))));
             }
 
             for (var i = 0; i < 360 / degree; i++)
             {
                 var f1 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians(i * degree)))).ToList();
-                var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) *degree)))).ToList();
+                var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) * degree)))).ToList();
 
                 for (var j = 0; j < 90 / degree; j++)
                 {
-                    var currentVertexNumber = i * 90/degree * 6 + j * 6;
-                    this.vetices[currentVertexNumber] = new VertexPositionColor(f1[0 + j], Color.White);
-                    this.vetices[currentVertexNumber + 2] = new VertexPositionColor(f2[0 + j], Color.White);
-                    this.vetices[currentVertexNumber + 1] = new VertexPositionColor(f1[1 + j], Color.White);
+                    var currentVertexNumber = i * 90 / degree * 6 + j * 6;
+                    this.vertices[currentVertexNumber] = new VertexPositionColor(f1[0 + j], Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 2] = new VertexPositionColor(f2[0 + j], Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 1] = new VertexPositionColor(f1[1 + j], Color.SandyBrown);
 
 
-                    this.vetices[currentVertexNumber + 4] = new VertexPositionColor(f1[1 + j], Color.White);
-                    this.vetices[currentVertexNumber + 3] = new VertexPositionColor(f2[0 + j], Color.White);
-                    this.vetices[currentVertexNumber + 5] = new VertexPositionColor(f2[1 + j], Color.White);
+                    this.vertices[currentVertexNumber + 4] = new VertexPositionColor(f1[1 + j], Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 3] = new VertexPositionColor(f2[0 + j], Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 5] = new VertexPositionColor(f2[1 + j], Color.SandyBrown);
                 }
 
 
@@ -53,17 +50,6 @@ namespace _3DGraphics.Objects
 
         }
 
-        public override void Draw(Matrix view, Matrix projection)
-        {
-            effect.View = view;
-            effect.Projection = projection;
-            effect.World = effect.World = this.rotaiton * Matrix.CreateTranslation(this.position);
-            foreach (var pass in this.effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
 
-                effect.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, this.vetices, 0, (360 / degree) * (90 / degree) * 2);
-            }
-        }
     }
 }

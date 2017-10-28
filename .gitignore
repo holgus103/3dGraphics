@@ -3,3 +3,4 @@
 3DGraphics/obj/
 3DGraphics/Content/bin/
 3DGraphics/Content/obj/
+*.tmp 

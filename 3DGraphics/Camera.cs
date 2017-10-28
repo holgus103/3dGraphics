@@ -22,6 +22,7 @@ namespace _3DGraphics
 
         public Matrix View => this.view;
         public Matrix Projection => this.projection;
+        public Vector3 Position => this.cameraPosition;
 
         public Camera(Vector3 init)
         {
@@ -89,6 +90,16 @@ namespace _3DGraphics
                 this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(axix, MathHelper.ToRadians(-2 * step)));
                 this.forward.Normalize();
                 this.up.Normalize();
+            }
+
+            if (keyboard.IsKeyDown(Keys.Q))
+            {
+                this.cameraPosition -= this.up * step;
+            }
+
+            if (keyboard.IsKeyDown(Keys.E))
+            {
+                this.cameraPosition += this.up * step;
             }
         }
 
