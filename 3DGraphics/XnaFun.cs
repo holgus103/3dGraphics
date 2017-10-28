@@ -35,13 +35,14 @@ namespace _3DGraphics
         {
             // TODO: Add your initialization logic here
             // add palm trees
-            this.elements.Add(new PalmTree(this.Content, new Vector3(-10, 9, 0), -0.2f, 0.5f, 0));
-            this.elements.Add(new PalmTree(this.Content, new Vector3(10, 7, 0), 0, 0, -0.3f));
+            this.elements.Add(new PalmTree(this.Content, new Vector3(-10, 9, 0), -0.2f, 0.5f, 0, 1));
+            this.elements.Add(new PalmTree(this.Content, new Vector3(10, 7, 0), 0, 0, -0.3f, 1));
             // add island
             this.elements.Add(new Island(0.7f, 10, 25, graphics.GraphicsDevice, new Vector3(0, 0, 0), 0, 0, 0));
             // add sea
             this.elements.Add(new Sea(this.camera, 0, graphics.GraphicsDevice, 150));
-
+            this.elements.Add(new Boat(this.Content, new Vector3(50, 0, 0), MathHelper.ToRadians(270), 0, 0, 0.05f));
+            this.elements.Add(new Flag(this.Content, new Vector3(0, 7, 0), 0, 0, 0, 0.5f));
             base.Initialize();
         }
 
@@ -80,7 +81,7 @@ namespace _3DGraphics
                 Exit();
 
             this.camera.Move(frameTime);
-            
+
             this.lastUpdate = DateTime.Now;
             base.Update(gameTime);
         }
