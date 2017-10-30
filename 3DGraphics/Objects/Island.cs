@@ -20,7 +20,7 @@ namespace _3DGraphics.Objects
             var fragmentVertices = new List<Vector3>(90 / degree + 1);
             var v1 = new Vector3(radius, 0, 0);
 
-            this.vertices = new VertexPositionColor[(360 / degree + 1) * (90 / degree + 1) * 6];
+            this.vertices = new VertexPositionNormalColor[(360 / degree + 1) * (90 / degree + 1) * 6];
             //generate fragment
             for (var i = 0; i <= 90 / degree; i++)
             {
@@ -35,14 +35,16 @@ namespace _3DGraphics.Objects
                 for (var j = 0; j < 90 / degree; j++)
                 {
                     var currentVertexNumber = i * 90 / degree * 6 + j * 6;
-                    this.vertices[currentVertexNumber] = new VertexPositionColor(f1[0 + j], Color.SandyBrown);
-                    this.vertices[currentVertexNumber + 2] = new VertexPositionColor(f2[0 + j], Color.SandyBrown);
-                    this.vertices[currentVertexNumber + 1] = new VertexPositionColor(f1[1 + j], Color.SandyBrown);
+                    var normal = Vector3.Cross(f2[0 + j] - f1[0 + j], f1[1 + j] - f1[0 + j]);
+                    normal.Normalize();
+                    this.vertices[currentVertexNumber] = new VertexPositionNormalColor(f1[0 + j], normal, Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 2] = new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 1] = new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
 
-
-                    this.vertices[currentVertexNumber + 4] = new VertexPositionColor(f1[1 + j], Color.SandyBrown);
-                    this.vertices[currentVertexNumber + 3] = new VertexPositionColor(f2[0 + j], Color.SandyBrown);
-                    this.vertices[currentVertexNumber + 5] = new VertexPositionColor(f2[1 + j], Color.SandyBrown);
+                    normal = Vector3.Cross(f2[0 + j] - f1[1 + j], f2[1 + j] - f1[1 + j]);
+                    this.vertices[currentVertexNumber + 4] = new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 3] = new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
+                    this.vertices[currentVertexNumber + 5] = new VertexPositionNormalColor(f2[1 + j], normal, Color.SandyBrown);
                 }
 
 

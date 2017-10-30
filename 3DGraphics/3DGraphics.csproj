@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Lights.cs" />
     <Compile Include="Objects\Boat.cs" />
     <Compile Include="Objects\Flag.cs" />
     <Compile Include="Objects\Island.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="Objects\Sea.cs" />
     <Compile Include="Objects\VertexObject.cs" />
+    <Compile Include="VertexPositionNormalColor.cs" />
     <Compile Include="XnaFun.cs" />
     <Compile Include="Objects\PalmTree.cs" />
     <Compile Include="Program.cs" />
@@ -63,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\boat.jpg" />
+    <Content Include="Content\Phong.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

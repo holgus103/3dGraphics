@@ -10,13 +10,19 @@ namespace _3DGraphics.Objects
 {
     class VertexObject : ObjectBase
     {
-        protected VertexPositionColor[] vertices;
+        protected VertexPositionNormalColor[] vertices;
         protected BasicEffect effect;
 
         protected VertexObject(GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
         {
+            var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
+
+            //Enables some basic effect characteristics, such as vertex coloring an ddefault lighting.
+
             this.effect = new BasicEffect(dev);
             this.effect.VertexColorEnabled = true;
+            this.effect.LightingEnabled = true;
+            this.effect.EnableDefaultLighting();
         }
 
         public override void Draw(Matrix view, Matrix projection)
@@ -27,7 +33,7 @@ namespace _3DGraphics.Objects
             foreach (var pass in this.effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                effect.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, this.vertices, 0, this.vertices.Length / 3);
+                effect.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, this.vertices, 0,this.vertices.Length, Enumerable.Range(0, this.vertices.Length).ToArray(), 0, this.vertices.Length / 3);
 
             }
         }

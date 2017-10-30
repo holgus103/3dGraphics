@@ -16,16 +16,16 @@ namespace _3DGraphics.Objects
         public Sea(Camera camera, float level, GraphicsDevice dev, float diagLength) : base(dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0)
         {
             this.camera = camera;
-            this.vertices = new VertexPositionColor[6];
+            this.vertices = new VertexPositionNormalColor[6];
 
             // 1st triangle
-            this.vertices[0] = new VertexPositionColor(new Vector3(diagLength, this.level, diagLength), Color.Navy);
-            this.vertices[1] = new VertexPositionColor(new Vector3(-diagLength, this.level, -diagLength), Color.Navy);
-            this.vertices[2] = new VertexPositionColor(new Vector3(diagLength, this.level, -diagLength), Color.Navy);
+            this.vertices[0] = new VertexPositionNormalColor(new Vector3(diagLength, this.level, diagLength), Vector3.UnitY, Color.Navy);
+            this.vertices[1] = new VertexPositionNormalColor(new Vector3(-diagLength, this.level, -diagLength), Vector3.UnitY, Color.Navy);
+            this.vertices[2] = new VertexPositionNormalColor(new Vector3(diagLength, this.level, -diagLength), Vector3.UnitY, Color.Navy);
             // 2nd triangle
-            this.vertices[4] = new VertexPositionColor(new Vector3(diagLength, this.level, diagLength), Color.Navy);
-            this.vertices[3] = new VertexPositionColor(new Vector3(-diagLength, this.level, -diagLength), Color.Navy);
-            this.vertices[5] = new VertexPositionColor(new Vector3(-diagLength, this.level, diagLength), Color.Navy);
+            this.vertices[4] = new VertexPositionNormalColor(new Vector3(diagLength, this.level, diagLength), Vector3.UnitY, Color.Navy);
+            this.vertices[3] = new VertexPositionNormalColor(new Vector3(-diagLength, this.level, -diagLength), Vector3.UnitY, Color.Navy);
+            this.vertices[5] = new VertexPositionNormalColor(new Vector3(-diagLength, this.level, diagLength), Vector3.UnitY, Color.Navy);
 
         }
 

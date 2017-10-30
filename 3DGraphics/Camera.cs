@@ -17,7 +17,7 @@ namespace _3DGraphics
         private Vector3 cameraPosition = new Vector3(0, 0, 50);
         public Vector3 up = new Vector3(0, 1, 0);
         public Vector3 forward = new Vector3(0, 0, 1);
-        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
+        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
         private Matrix view;
 
         public Matrix View => this.view;
