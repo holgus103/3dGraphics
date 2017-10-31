@@ -76,18 +76,20 @@ namespace _3DGraphics
 
             if (keyboard.IsKeyDown(Keys.W))
             {
-                var axix = Vector3.Cross(this.up, this.forward);
-                this.forward = Vector3.Transform(this.forward, Matrix.CreateFromAxisAngle(axix, MathHelper.ToRadians(2 * step)));
-                this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(axix, MathHelper.ToRadians(2 * step)));
+                var axis = Vector3.Cross(this.up, this.forward);
+                axis.Normalize();
+                this.forward = Vector3.Transform(this.forward, Matrix.CreateFromAxisAngle(axis, MathHelper.ToRadians(2 * step)));
+                this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(axis, MathHelper.ToRadians(2 * step)));
                 this.forward.Normalize();
                 this.up.Normalize();
             }
 
             if (keyboard.IsKeyDown(Keys.S))
             {
-                var axix = Vector3.Cross(this.up, this.forward);
-                this.forward = Vector3.Transform(this.forward, Matrix.CreateFromAxisAngle(axix, MathHelper.ToRadians(-2 * step)));
-                this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(axix, MathHelper.ToRadians(-2 * step)));
+                var axis = Vector3.Cross(this.up, this.forward);
+                axis.Normalize();
+                this.forward = Vector3.Transform(this.forward, Matrix.CreateFromAxisAngle(axis, MathHelper.ToRadians(-2 * step)));
+                this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(axis, MathHelper.ToRadians(-2 * step)));
                 this.forward.Normalize();
                 this.up.Normalize();
             }
@@ -103,6 +105,6 @@ namespace _3DGraphics
             }
         }
 
-        public void Draw() => this.view = Matrix.CreateLookAt(this.cameraPosition, this.cameraPosition - this.forward, Vector3.UnitY);
+        public void Draw() => this.view = Matrix.CreateLookAt(this.cameraPosition, this.cameraPosition - this.forward, this.up);
     }
 }
