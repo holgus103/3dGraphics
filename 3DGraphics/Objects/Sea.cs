@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace _3DGraphics.Objects
@@ -13,7 +14,7 @@ namespace _3DGraphics.Objects
         private Camera camera;
         private float level;
 
-        public Sea(Camera camera, float level, GraphicsDevice dev, float diagLength) : base(dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0)
+        public Sea(ContentManager ctx, Camera camera, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0)
         {
             this.camera = camera;
             this.vertices = new VertexPositionNormalColor[6];

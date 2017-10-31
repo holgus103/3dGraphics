@@ -10,12 +10,12 @@ namespace _3DGraphics.Objects
     abstract class ObjectBase
     {
         protected Vector3 position;
-        protected Matrix rotaiton;
+        protected Matrix rotation;
 
         protected ObjectBase(Vector3 position, float xRotation, float yRotation, float zRotation)
         {
             this.position = position;
-            this.rotaiton = Matrix.CreateRotationX(xRotation) * Matrix.CreateRotationY(yRotation) * Matrix.CreateRotationZ(zRotation);
+            this.rotation = Matrix.CreateRotationX(xRotation) * Matrix.CreateRotationY(yRotation) * Matrix.CreateRotationZ(zRotation);
         }
 
         public void MoveTo(Vector3 pos)

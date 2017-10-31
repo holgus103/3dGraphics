@@ -21,7 +21,7 @@ namespace _3DGraphics.Objects
             return normal;
         }
 
-        public Island(float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(dev, position, xRotation, yRotation, zRotation)
+        public Island(ContentManager ctx, float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, dev, position, xRotation, yRotation, zRotation)
         {
 
             this.degree = degree;

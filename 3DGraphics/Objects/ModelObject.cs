@@ -25,7 +25,7 @@ namespace _3DGraphics.Objects
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.World = Matrix.CreateScale(this.scale) * this.rotaiton * Matrix.CreateTranslation(this.position);
+                    effect.World = Matrix.CreateScale(this.scale) * this.rotation * Matrix.CreateTranslation(this.position);
                     effect.View = view;
                     effect.Projection = projection;
                 }

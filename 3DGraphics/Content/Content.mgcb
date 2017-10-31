@@ -70,3 +70,9 @@
 /processorParam:TextureFormat=Compressed
 /build:PirateFlag.obj
 
+#begin Phong.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Phong.fx
+

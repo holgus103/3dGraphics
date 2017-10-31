@@ -103,6 +103,16 @@ namespace _3DGraphics
             {
                 this.cameraPosition += this.up * step;
             }
+            if (keyboard.IsKeyDown(Keys.X))
+            {
+                this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(this.forward, MathHelper.ToRadians(2 * step)));
+                this.up.Normalize();
+            }
+            if (keyboard.IsKeyDown(Keys.Z))
+            {
+                this.up = Vector3.Transform(this.up, Matrix.CreateFromAxisAngle(this.forward, MathHelper.ToRadians(-2 * step)));
+                this.up.Normalize();
+            }
         }
 
         public void Draw() => this.view = Matrix.CreateLookAt(this.cameraPosition, this.cameraPosition - this.forward, this.up);

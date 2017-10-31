@@ -50,6 +50,7 @@
     <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="Objects\Sea.cs" />
     <Compile Include="Objects\VertexObject.cs" />
+    <Compile Include="PhongShader.cs" />
     <Compile Include="VertexPositionNormalColor.cs" />
     <Compile Include="XnaFun.cs" />
     <Compile Include="Objects\PalmTree.cs" />
@@ -65,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\boat.jpg" />
-    <Content Include="Content\Phong.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace _3DGraphics.Objects
 {
@@ -13,12 +15,13 @@ namespace _3DGraphics.Objects
         protected VertexPositionNormalColor[] vertices;
         protected BasicEffect effect;
 
-        protected VertexObject(GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
+        protected VertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
         {
             var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
 
             //Enables some basic effect characteristics, such as vertex coloring an ddefault lighting.
 
+            //this.effect = new PhongShader(ctx);
             this.effect = new BasicEffect(dev);
             this.effect.VertexColorEnabled = true;
             this.effect.LightingEnabled = true;
@@ -29,7 +32,7 @@ namespace _3DGraphics.Objects
         {
             effect.View = view;
             effect.Projection = projection;
-            effect.World = effect.World = this.rotaiton * Matrix.CreateTranslation(this.position);
+            effect.World = effect.World = this.rotation * Matrix.CreateTranslation(this.position);
             foreach (var pass in this.effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
