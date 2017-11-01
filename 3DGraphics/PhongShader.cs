@@ -30,7 +30,7 @@ namespace _3DGraphics
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
-            Vector3 ldp = new Vector3(0,0,0);
+            Vector3 ldp = new Vector3(1,1,1);
             var colors = new[]
             {
                 new Vector3(1.0f, 0, 0),
@@ -44,10 +44,10 @@ namespace _3DGraphics
             };
             effect = ctx.Load<Effect>("Phong");
             // set up lights
-            this.LightPosition = new[] { new Vector3(-1, 1, 1), new Vector3(0, 45, 0) };
+            this.LightPosition = new[] { new Vector3(-1, -1, 1), new Vector3(0, 45, 0) };
             this.La = new[] { new Vector3(1, 1, 1), new Vector3(0.5f, 0.5f, 0.5f) };
-            this.Ld = new[] { ldp, new Vector3(0, 0, 0)};
-            this.Ls = new[] { new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+            this.Ld = new[] { ldp, new Vector3(1, 1, 1)};
+            this.Ls = new[] { new Vector3(1, 1, 1), new Vector3(1, 1, 1) };
 
             var t = new Timer()
             {

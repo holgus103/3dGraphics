@@ -85,7 +85,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	float4 viewPosition = mul(worldPosition, View);
 	output.Position = mul(viewPosition, Projection);
 	output.Color = input.Color;
-	output.Normal = input.Normal;
+	output.Normal = mul(input.Normal, World);
 	output.WorldPos = worldPosition;
 
 	return output;
@@ -128,7 +128,7 @@ VertexShaderOutputTx VertexShaderTxFunction(VertexShaderInputTx input)
 	output.Position = mul(viewPosition, Projection);
 	output.TextCoords = input.TextCoords;
 	output.Normal = mul(input.Normal, World);
-	output.WorldPos = input.Position;
+	output.WorldPos = worldPosition;
 	return output;
 }
 
