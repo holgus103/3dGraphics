@@ -15,7 +15,7 @@ float3 LightPosition[LIGHTS_COUNT];
 float3 La[LIGHTS_COUNT];		//Ambient light intensity
 float3 Ld[LIGHTS_COUNT];		//Diffuse light intensity
 float3 Ls[LIGHTS_COUNT];		//Specular light intensity
-
+float IsDirect[LIGHTS_COUNT];
 
 
 // Material info
@@ -24,12 +24,20 @@ float3 Kd;			//Diffuse reflectivity
 float3 Ks;			//Specular reflectivity
 float Shininess;	//Specular shininess factor
 
-void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3 diffuse, out float3 spec) 
+void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3 diffuse, out float3 spec)
 {
+	float4 worldPosition = mul(float4(LightPosition[i], 1), World);
+	float4 Position = mul(pos, View);
+
+
+	float3 s = (float3)0;
 	float3 n = normalize(norm);
-	float3 s = normalize(LightPosition[i] - pos);
-	float3 v = normalize(-pos);
-	float3 r = reflect(-s, n);
+	//float vn = mul(mul(float4(norm,0), World), View);
+	//s = IsDirect[i] * normalize(-LightPosition[i]) + (1 - IsDirect[i]) * normalize(LightPosition[i] - pos);
+	s = IsDirect[i] * normalize(-LightPosition[i]) + (1 - IsDirect[i]) * normalize(LightPosition[i] - pos);
+	float3 v = normalize(-Position);
+	float3 sv = mul(s, View);
+	float3 r = reflect(sv, n);
 
 	ambient = La[i] * Ka;
 	float sDotN = max(dot(s, n), 0.0);
@@ -78,7 +86,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.Position = mul(viewPosition, Projection);
 	output.Color = input.Color;
 	output.Normal = input.Normal;
-	output.WorldPos = input.Position;
+	output.WorldPos = worldPosition;
 
 	return output;
 }
@@ -100,6 +108,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 		diffuseSum += diffuse;
 		specSum += spec;
 	}
+	ambientSum = saturate(ambientSum);
+	diffuseSum = saturate(diffuseSum);
+	specSum = saturate(specSum);
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * input.Color + float4(specSum, 1);
 	//return input.Color;
@@ -116,9 +127,8 @@ VertexShaderOutputTx VertexShaderTxFunction(VertexShaderInputTx input)
 	float4 viewPosition = mul(worldPosition, View);
 	output.Position = mul(viewPosition, Projection);
 	output.TextCoords = input.TextCoords;
-	output.Normal = input.Normal;
+	output.Normal = mul(input.Normal, World);
 	output.WorldPos = input.Position;
-
 	return output;
 }
 
@@ -128,6 +138,7 @@ float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
 	float3 diffuseSum = (float3)0;
 	float3 specSum = (float3)0;
 	// output params
+
 	float3 ambient, diffuse, spec;
 	//ambientSum = float3(0.1, 0.1, 0.1);
 	//diffuseSum = float3(0.1, 0.1, 0.1);
@@ -140,7 +151,7 @@ float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
 		specSum += spec;
 	}
 
-	float4 tex = tex2D(TextureSampler, input.TextCoords);
+	float4 tex = float4(1, 0, 0, 1);
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
 	//return input.Color;

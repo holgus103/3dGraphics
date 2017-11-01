@@ -42,7 +42,8 @@ namespace _3DGraphics
             // add sea
             this.elements.Add(new Sea(this.Content, this.camera, 0, graphics.GraphicsDevice, 150));
             this.elements.Add(new Boat(this.Content, new Vector3(50, 0, 0), MathHelper.ToRadians(270), 0, 0, 0.05f));
-            this.elements.Add(new Flag(this.Content, new Vector3(0, 7, 0), 0, 0, 0, 0.5f));
+            //this.elements.Add(new Flag(this.Content, new Vector3(0, 7, 0), 0, 0, 0, 0.5f));
+            this.elements.Add(new Lighthouse(this.Content, new Vector3(0, 7, 0), 0, 0, 0, 0.01f));
             base.Initialize();
         }
 

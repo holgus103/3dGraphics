@@ -27,6 +27,7 @@ namespace _3DGraphics.Objects
                 foreach (var part in mesh.MeshParts)
                 {
                     effect.World = Matrix.CreateScale(this.scale) * this.rotation * Matrix.CreateTranslation(this.position);
+                    //part.
                     effect.View = view;
                     effect.Projection = projection;
                     part.Effect = effect.Effect;

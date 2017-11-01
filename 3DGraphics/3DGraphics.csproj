@@ -46,6 +46,7 @@
     <Compile Include="Objects\Boat.cs" />
     <Compile Include="Objects\Flag.cs" />
     <Compile Include="Objects\Island.cs" />
+    <Compile Include="Objects\Lighthouse.cs" />
     <Compile Include="Objects\ModelObject.cs" />
     <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="Objects\Sea.cs" />
@@ -72,6 +73,7 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <None Include="Content\Lighthouse_Lit.obj" />
     <None Include="Content\Palm1.fbx" />
     <None Include="Content\PirateFlag.obj" />
     <None Include="Content\Row_Boat.FBX" />

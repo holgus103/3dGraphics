@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.AccessControl;
 using System.Text;
+using System.Timers;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,20 +25,52 @@ namespace _3DGraphics
         private const string LA = "La";
         private const string LD = "Ld";
         private const string LS = "Ls";
+        private const string IS_DIRECT = "IsDirect";
+        private int currentIndex = 0;
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
+            Vector3 ldp = new Vector3(0,0,0);
+            var colors = new[]
+            {
+                new Vector3(1.0f, 0, 0),
+                new Vector3(1.0f, 0.25f, 0),
+                new Vector3(1, 0.5f, 0),
+                new Vector3(1, 0.75f, 0),
+                new Vector3(1, 1, 0),
+                new Vector3(1, 0.75f, 0),
+                new Vector3(1, 0.5f, 0),
+                new Vector3(1, 0.25f, 0),
+            };
             effect = ctx.Load<Effect>("Phong");
             // set up lights
-            this.LightPosition = new[] { new Vector3(100, 100, 100), new Vector3(0, 30, 0) };
-            this.La = new[] { new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0.5f, 0.5f, 0.5f) };
-            this.Ld = new[] { new Vector3(1, 1, 1), new Vector3(1, 1, 1) };
-            this.Ls = new[] { new Vector3(0.3f, 0.3f, 0.3f), new Vector3(0.3f, 0.3f, 0.3f) };
+            this.LightPosition = new[] { new Vector3(-1, 1, 1), new Vector3(0, 45, 0) };
+            this.La = new[] { new Vector3(1, 1, 1), new Vector3(0.5f, 0.5f, 0.5f) };
+            this.Ld = new[] { ldp, new Vector3(0, 0, 0)};
+            this.Ls = new[] { new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+
+            var t = new Timer()
+            {
+                Interval = 1000,
+                AutoReset = true,
+            };
+
+            t.Elapsed += (o, e) =>
+            {
+                currentIndex++;
+                currentIndex %= colors.Length;
+                this.Ld = new[] { ldp, colors[this.currentIndex]};
+            };
+
+            //t.Start();
+
             // TODO: Move to baseobject
             this.Ka = new Vector3(0.2f, 0.2f, 0.2f);
             this.Kd = new Vector3(1f, 1f, 1f);
-            this.Ks = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Shininess = 2;
+            this.Ks = new Vector3(1, 1, 1);
+            this.Shininess = 100;
+            this.IsDirect = new[] {1.0f, 0.0f};
+
         }
 
         public Effect Effect => this.effect;
@@ -43,10 +78,12 @@ namespace _3DGraphics
         private Matrix getMatrix(string name) => this.effect.Parameters[name].GetValueMatrix();
         private Vector3 getVector3(string name) => this.effect.Parameters[name].GetValueVector3();
         private Vector3[] getVector3Array(string name) => this.effect.Parameters[name].GetValueVector3Array();
+        private float[] getScalarArray(string name) => this.effect.Parameters[name].GetValueSingleArray();
         private float getScalar(string name) => this.effect.Parameters[name].GetValueSingle();
         private void setMatrix(string name, Matrix val) => this.effect.Parameters[name].SetValue(val);
         private void setVector3(string name, Vector3 val) => this.effect.Parameters[name].SetValue(val);
         private void setVector3Array(string name, Vector3[] val) => this.effect.Parameters[name].SetValue(val);
+        private void setScakarFloat(string name, float[] val) => this.effect.Parameters[name].SetValue(val);
         private void setScalar(string name, float val) => this.effect.Parameters[name].SetValue(val);
 
         public Matrix View
@@ -175,6 +212,18 @@ namespace _3DGraphics
             set
             {
                 this.setVector3Array(LIGHT_POSITION, value);
+            }
+        }
+
+        public float[] IsDirect
+        {
+            get
+            {
+                return this.getScalarArray(IS_DIRECT);
+            }
+            set
+            {
+                this.setScakarFloat(IS_DIRECT, value);
             }
         }
 
