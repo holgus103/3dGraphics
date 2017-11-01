@@ -6,11 +6,23 @@
 	#define VS_SHADERMODEL vs_4_0_level_9_1
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
-
+#define LIGHTS_COUNT 2
 matrix World;
 matrix View;
 matrix Projection;
+// Light info
+float3 LightPosition[LIGHTS_COUNT];
+float3 La[LIGHTS_COUNT];		//Ambient light intensity
+float3 Ld[LIGHTS_COUNT];		//Diffuse light intensity
+float3 Ls[LIGHTS_COUNT];		//Specular light intensity
 
+
+
+// Material info
+float3 Ka;			//Ambient reflectivity
+float3 Kd;			//Diffuse reflectivity
+float3 Ks;			//Specular reflectivity
+float Shininess;	//Specular shininess factor
 
 struct VertexShaderInput
 {
@@ -25,6 +37,7 @@ struct VertexShaderOutput
 	float Color : COLOR0;
 	float3 Normal : NORMAL0;
 };
+
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {

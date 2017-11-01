@@ -27,7 +27,6 @@ namespace _3DGraphics.Objects
             effect.View = view;
             effect.Projection = projection;
             effect.World = this.rotation * Matrix.CreateTranslation(this.position);
-            effect.World = this.rotation * Matrix.CreateTranslation(this.position);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

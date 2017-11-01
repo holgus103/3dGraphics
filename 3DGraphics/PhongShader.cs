@@ -14,7 +14,14 @@ namespace _3DGraphics
         private const string VIEW = "View";
         private const string PROJECTION = "Projection";
         private const string WORLD = "World";
-        private const string WORLDVIEWPROJ = "WorldViewProj";
+        private const string KA = "Ka";
+        private const string KD = "Kd";
+        private const string KS = "Ks";
+        private const string SHININESS = "Shininess";
+        private const string LIGHT_POSITION = "LightPosition";
+        private const string LA = "La";
+        private const string LD = "Ld";
+        private const string LS = "Ls";
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
@@ -24,7 +31,11 @@ namespace _3DGraphics
         public Effect Effect => PhongShader.effect;
 
         private Matrix getMatrix(string name) => PhongShader.effect.Parameters[name].GetValueMatrix();
+        private Vector3 getVector3(string name) => PhongShader.effect.Parameters[name].GetValueVector3();
+        private Vector3[] getVector3Array(string name) => PhongShader.effect.Parameters[name].GetValueVector3Array();
         private void setMatrix(string name, Matrix val) => PhongShader.effect.Parameters[name].SetValue(val);
+        private void setVector3(string name, Vector3 val) => PhongShader.effect.Parameters[name].SetValue(val);
+        private void setVector3Array(string name, Vector3[] val) => PhongShader.effect.Parameters[name].SetValue(val);
 
         public Matrix View
         {
@@ -35,18 +46,6 @@ namespace _3DGraphics
             set
             {
                 this.setMatrix(VIEW, value);
-            }
-        }
-
-        public Matrix WorldViewProj
-        {
-            get
-            {
-                return this.getMatrix(WORLDVIEWPROJ);
-            }
-            set
-            {
-                this.setMatrix(WORLDVIEWPROJ, value);
             }
         }
 
@@ -71,6 +70,99 @@ namespace _3DGraphics
             set
             {
                 this.setMatrix(WORLD, value);
+            }
+        }
+
+        public Vector3 Ka
+        {
+            get
+            {
+                return this.getVector3(KA);
+            }
+            set
+            {
+                this.setVector3(KA, value);
+            }
+        }
+
+        public Vector3 Kd
+        {
+            get
+            {
+                return this.getVector3(KD);
+            }
+            set
+            {
+                this.setVector3(KD, value);
+            }
+        }
+
+        public Vector3 Ks
+        {
+            get
+            {
+                return this.getVector3(KS);
+            }
+            set
+            {
+                this.setVector3(KS, value);
+            }
+        }
+
+        public Vector3 Shininess
+        {
+            get
+            {
+                return this.getVector3(SHININESS);
+            }
+            set
+            {
+                this.setVector3(SHININESS, value);
+            }
+        }
+
+        public Vector3 La
+        {
+            get
+            {
+                return this.getVector3(LA);
+            }
+            set
+            {
+                this.setVector3(LA, value);
+            }
+        }
+        public Vector3 Ld
+        {
+            get
+            {
+                return this.getVector3(LD);
+            }
+            set
+            {
+                this.setVector3(LD, value);
+            }
+        }
+        public Vector3 Ls
+        {
+            get
+            {
+                return this.getVector3(LS);
+            }
+            set
+            {
+                this.setVector3(LS, value);
+            }
+        }
+        public Vector3 LightPosition
+        {
+            get
+            {
+                return this.getVector3(LIGHT_POSITION);
+            }
+            set
+            {
+                this.setVector3(LIGHT_POSITION, value);
             }
         }
 
