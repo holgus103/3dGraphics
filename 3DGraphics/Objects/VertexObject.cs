@@ -13,27 +13,22 @@ namespace _3DGraphics.Objects
     class VertexObject : ObjectBase
     {
         protected VertexPositionNormalColor[] vertices;
-        protected Effect effect;
+        protected PhongShader effect;
 
         protected VertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
         {
             var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
 
-            //Enables some basic effect characteristics, such as vertex coloring an ddefault lighting.
-            this.effect = ctx.Load<Effect>("Phong");
-            //this.effect = new PhongShader(ctx);
-            //this.effect = new BasicEffect(dev);
-            //this.effect.VertexColorEnabled = true;
-            //this.effect.LightingEnabled = true;
-            //this.effect.EnableDefaultLighting();
+            this.effect = new PhongShader(ctx);
         }
 
         public override void Draw(Matrix view, Matrix projection)
         {
-            effect.Parameters["View"].SetValue(view);
-            effect.Parameters["Projection"].SetValue(projection);
-            effect.Parameters["World"].SetValue(this.rotation * Matrix.CreateTranslation(this.position));
-            foreach (var pass in this.effect.CurrentTechnique.Passes)
+            effect.View = view;
+            effect.Projection = projection;
+            effect.World = this.rotation * Matrix.CreateTranslation(this.position);
+            effect.World = this.rotation * Matrix.CreateTranslation(this.position);
+            foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 effect.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, this.vertices, 0,this.vertices.Length, Enumerable.Range(0, this.vertices.Length).ToArray(), 0, this.vertices.Length / 3);

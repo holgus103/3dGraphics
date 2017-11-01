@@ -18,10 +18,7 @@ namespace _3DGraphics
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
-            if (effect == null)
-            {
                 effect = ctx.Load<Effect>("Phong");
-            }
         }
 
         public Effect Effect => PhongShader.effect;
@@ -73,7 +70,7 @@ namespace _3DGraphics
             }
             set
             {
-                this.setMatrix(PROJECTION, value);
+                this.setMatrix(WORLD, value);
             }
         }
 
