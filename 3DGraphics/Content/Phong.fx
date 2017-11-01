@@ -24,6 +24,18 @@ float3 Kd;			//Diffuse reflectivity
 float3 Ks;			//Specular reflectivity
 float Shininess;	//Specular shininess factor
 
+void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3 diffuse, out float3 spec) 
+{
+	float3 n = normalize(norm);
+	float3 s = normalize(LightPosition[i] - pos);
+	float3 v = normalize(-pos);
+	float3 r = reflect(-s, n);
+
+	ambient = La[i] * Ka;
+	float sDotN = max(dot(s, n), 0.0);
+	diffuse = Ld[i] * Kd * sDotN;
+	spec = Ls[i] * Ks * pow(max(dot(r, v), 0.0), Shininess);
+}
 struct VertexShaderInput
 {
 	float4 Position : POSITION0;
@@ -52,6 +64,21 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
+	float3 ambientSum = (float3)0;
+	float3 diffuseSum = (float3)0;
+	float3 specSum = (float3)0;
+	// output params
+	float3 ambient, diffuse, spec;
+
+	for (int i = 0; i<LIGHTS_COUNT; i++)
+	{
+		processLight(i, input.Position, input.Normal, ambient, diffuse, spec);
+		ambientSum += ambient;
+		diffuseSum += diffuse;
+		specSum += spec;
+	}
+	ambientSum /= LIGHTS_COUNT;
+	float4 finalColor = float4(ambientSum + diffuseSum, 1) * input.Color + float4(specSum, 1);
 	return float4(1,0,0,1);
 }
 
