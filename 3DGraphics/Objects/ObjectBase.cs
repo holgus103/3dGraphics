@@ -12,11 +12,15 @@ namespace _3DGraphics.Objects
     {
         protected Vector3 position;
         protected Matrix rotation;
-        protected PhongShader effect;
+        protected static PhongShader effect;
 
         protected ObjectBase(ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation)
         {
-            this.effect = new PhongShader(ctx);
+            if (effect == null)
+            {
+                effect = new PhongShader(ctx);
+                Lights.AddLighting(effect);
+            }
             this.position = position;
             this.rotation = Matrix.CreateRotationX(xRotation) * Matrix.CreateRotationY(yRotation) * Matrix.CreateRotationZ(zRotation);
         }

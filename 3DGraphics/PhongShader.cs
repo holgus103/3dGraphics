@@ -27,51 +27,10 @@ namespace _3DGraphics
         private const string LS = "Ls";
         private const string IS_DIRECT = "IsDirect";
         private const string CAMERA_POSITION = "CameraPosition";
-        private int currentIndex = 0;
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
-            Vector3 ldp = new Vector3(1,1,1);
-            var colors = new[]
-            {
-                new Vector3(1.0f, 0, 0),
-                new Vector3(1.0f, 0.25f, 0),
-                new Vector3(1, 0.5f, 0),
-                new Vector3(1, 0.75f, 0),
-                new Vector3(1, 1, 0),
-                new Vector3(1, 0.75f, 0),
-                new Vector3(1, 0.5f, 0),
-                new Vector3(1, 0.25f, 0),
-            };
             effect = ctx.Load<Effect>("Phong");
-            // set up lights
-            this.LightPosition = new[] { new Vector3(-1, -1, 1), new Vector3(0, 45, 0) };
-            this.La = new[] { new Vector3(1, 1, 1), new Vector3(0.5f, 0.5f, 0.5f) };
-            this.Ld = new[] { ldp, new Vector3(1, 1, 1)};
-            this.Ls = new[] { new Vector3(1, 1, 1), new Vector3(1, 1, 1) };
-
-            var t = new Timer()
-            {
-                Interval = 1000,
-                AutoReset = true,
-            };
-
-            t.Elapsed += (o, e) =>
-            {
-                currentIndex++;
-                currentIndex %= colors.Length;
-                this.Ld = new[] { ldp, colors[this.currentIndex]};
-            };
-
-            //t.Start();
-
-            // TODO: Move to baseobject
-            this.Ka = new Vector3(0.2f, 0.2f, 0.2f);
-            this.Kd = new Vector3(1f, 1f, 1f);
-            this.Ks = new Vector3(1, 1, 1);
-            this.Shininess = 100;
-            this.IsDirect = new[] {1.0f, 0.0f};
-
         }
 
         public Effect Effect => this.effect;
