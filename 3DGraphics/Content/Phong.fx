@@ -52,6 +52,23 @@ struct VertexShaderOutput
 };
 
 
+struct VertexShaderInputTx
+{
+	float4 Position : POSITION0;
+	float3 Normal : NORMAL0;
+	float2 TextCoords : TEXCOORD0;
+};
+
+struct VertexShaderOutputTx
+{
+	float4 Position : POSITION0;
+	float2 TextCoords : TEXCOORD0;
+	float3 Normal : NORMAL0;
+	float3 WorldPos : TEXCOORD1;
+};
+
+sampler TextureSampler : register(s0);
+
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
 	VertexShaderOutput output;
@@ -89,11 +106,61 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	//return float4(1,0,0,1);
 }
 
-technique BasicColorDrawing
+//TEXTURE VERSION
+
+VertexShaderOutputTx VertexShaderTxFunction(VertexShaderInputTx input)
+{
+	VertexShaderOutputTx output;
+
+	float4 worldPosition = mul(input.Position, World);
+	float4 viewPosition = mul(worldPosition, View);
+	output.Position = mul(viewPosition, Projection);
+	output.TextCoords = input.TextCoords;
+	output.Normal = input.Normal;
+	output.WorldPos = input.Position;
+
+	return output;
+}
+
+float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
+{
+	float3 ambientSum = (float3)0;
+	float3 diffuseSum = (float3)0;
+	float3 specSum = (float3)0;
+	// output params
+	float3 ambient, diffuse, spec;
+	//ambientSum = float3(0.1, 0.1, 0.1);
+	//diffuseSum = float3(0.1, 0.1, 0.1);
+	//specSum = float3(0.1, 0.1, 0.1);
+	for (int i = 0; i<LIGHTS_COUNT; i++)
+	{
+		processLight(i, input.WorldPos, input.Normal, ambient, diffuse, spec);
+		ambientSum += ambient;
+		diffuseSum += diffuse;
+		specSum += spec;
+	}
+
+	float4 tex = tex2D(TextureSampler, input.TextCoords);
+	ambientSum /= LIGHTS_COUNT;
+	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
+	//return input.Color;
+	//return float4(1,0,0,1);
+}
+
+technique NoTextureTeq
 {
 	pass P0
 	{
 		VertexShader = compile VS_SHADERMODEL VertexShaderFunction();
 		PixelShader = compile PS_SHADERMODEL PixelShaderFunction();
+	}
+};
+
+technique TextureTeq
+{
+	pass P0
+	{
+		VertexShader = compile VS_SHADERMODEL VertexShaderTxFunction();
+		PixelShader = compile PS_SHADERMODEL PixelShaderTxFunction();
 	}
 };

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace _3DGraphics.Objects
 {
@@ -11,9 +12,11 @@ namespace _3DGraphics.Objects
     {
         protected Vector3 position;
         protected Matrix rotation;
+        protected PhongShader effect;
 
-        protected ObjectBase(Vector3 position, float xRotation, float yRotation, float zRotation)
+        protected ObjectBase(ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation)
         {
+            this.effect = new PhongShader(ctx);
             this.position = position;
             this.rotation = Matrix.CreateRotationX(xRotation) * Matrix.CreateRotationY(yRotation) * Matrix.CreateRotationZ(zRotation);
         }

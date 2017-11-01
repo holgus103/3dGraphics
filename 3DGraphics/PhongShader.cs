@@ -10,7 +10,7 @@ namespace _3DGraphics
 {
     class PhongShader
     {
-        private static Effect effect;
+        private Effect effect;
         private const string VIEW = "View";
         private const string PROJECTION = "Projection";
         private const string WORLD = "World";
@@ -38,16 +38,16 @@ namespace _3DGraphics
             this.Shininess = 2;
         }
 
-        public Effect Effect => PhongShader.effect;
+        public Effect Effect => this.effect;
 
-        private Matrix getMatrix(string name) => PhongShader.effect.Parameters[name].GetValueMatrix();
-        private Vector3 getVector3(string name) => PhongShader.effect.Parameters[name].GetValueVector3();
-        private Vector3[] getVector3Array(string name) => PhongShader.effect.Parameters[name].GetValueVector3Array();
-        private float getScalar(string name) => PhongShader.effect.Parameters[name].GetValueSingle();
-        private void setMatrix(string name, Matrix val) => PhongShader.effect.Parameters[name].SetValue(val);
-        private void setVector3(string name, Vector3 val) => PhongShader.effect.Parameters[name].SetValue(val);
-        private void setVector3Array(string name, Vector3[] val) => PhongShader.effect.Parameters[name].SetValue(val);
-        private void setScalar(string name, float val) => PhongShader.effect.Parameters[name].SetValue(val);
+        private Matrix getMatrix(string name) => this.effect.Parameters[name].GetValueMatrix();
+        private Vector3 getVector3(string name) => this.effect.Parameters[name].GetValueVector3();
+        private Vector3[] getVector3Array(string name) => this.effect.Parameters[name].GetValueVector3Array();
+        private float getScalar(string name) => this.effect.Parameters[name].GetValueSingle();
+        private void setMatrix(string name, Matrix val) => this.effect.Parameters[name].SetValue(val);
+        private void setVector3(string name, Vector3 val) => this.effect.Parameters[name].SetValue(val);
+        private void setVector3Array(string name, Vector3[] val) => this.effect.Parameters[name].SetValue(val);
+        private void setScalar(string name, float val) => this.effect.Parameters[name].SetValue(val);
 
         public Matrix View
         {

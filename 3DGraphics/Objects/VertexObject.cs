@@ -13,17 +13,16 @@ namespace _3DGraphics.Objects
     class VertexObject : ObjectBase
     {
         protected VertexPositionNormalColor[] vertices;
-        protected PhongShader effect;
 
-        protected VertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
+        protected VertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, position, xRotation, yRotation, zRotation)
         {
-            var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
+            //var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
 
-            this.effect = new PhongShader(ctx);
         }
 
         public override void Draw(Matrix view, Matrix projection)
         {
+            effect.Effect.CurrentTechnique = effect.Effect.Techniques["NoTextureTeq"];
             effect.View = view;
             effect.Projection = projection;
             effect.World = this.rotation * Matrix.CreateTranslation(this.position);
