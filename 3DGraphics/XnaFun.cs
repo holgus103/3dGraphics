@@ -96,7 +96,7 @@ namespace _3DGraphics
             GraphicsDevice.Clear(Color.White);
             this.camera.Draw();
 
-            this.elements.ForEach(e => e.Draw(this.camera.View, this.camera.Projection));
+            this.elements.ForEach(e => e.Draw(this.camera.View, this.camera.Projection, camera.Position));
 
             base.Draw(gameTime);
         }

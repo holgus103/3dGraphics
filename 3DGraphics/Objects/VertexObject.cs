@@ -20,8 +20,9 @@ namespace _3DGraphics.Objects
 
         }
 
-        public override void Draw(Matrix view, Matrix projection)
+        public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
+            effect.CameraPosition = pos;
             effect.Effect.CurrentTechnique = effect.Effect.Techniques["NoTextureTeq"];
             effect.View = view;
             effect.Projection = projection;

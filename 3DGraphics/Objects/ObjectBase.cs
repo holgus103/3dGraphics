@@ -26,6 +26,6 @@ namespace _3DGraphics.Objects
             this.position = pos;
         }
 
-        public abstract void Draw(Matrix view, Matrix projection);
+        public abstract void Draw(Matrix view, Matrix projection, Vector3 pos);
     }
 }

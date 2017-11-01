@@ -10,6 +10,7 @@
 matrix World;
 matrix View;
 matrix Projection;
+float3 CameraPosition;
 // Light info
 float3 LightPosition[LIGHTS_COUNT];
 float3 La[LIGHTS_COUNT];		//Ambient light intensity
@@ -26,18 +27,15 @@ float Shininess;	//Specular shininess factor
 
 void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3 diffuse, out float3 spec)
 {
-	float4 worldPosition = mul(float4(LightPosition[i], 1), World);
 	float4 Position = mul(pos, View);
-
-
 	float3 s = (float3)0;
 	float3 n = normalize(norm);
-	//float vn = mul(mul(float4(norm,0), World), View);
+	//float vn = mul(float4(norm,0), View);
 	//s = IsDirect[i] * normalize(-LightPosition[i]) + (1 - IsDirect[i]) * normalize(LightPosition[i] - pos);
 	s = IsDirect[i] * normalize(-LightPosition[i]) + (1 - IsDirect[i]) * normalize(LightPosition[i] - pos);
-	float3 v = normalize(-Position);
-	float3 sv = mul(s, View);
-	float3 r = reflect(sv, n);
+	float3 v = normalize(CameraPosition - pos);
+	//float3 sv = mul(s, View);
+	float3 r = reflect(-s, n);
 
 	ambient = La[i] * Ka;
 	float sDotN = max(dot(s, n), 0.0);

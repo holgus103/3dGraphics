@@ -26,6 +26,7 @@ namespace _3DGraphics
         private const string LD = "Ld";
         private const string LS = "Ls";
         private const string IS_DIRECT = "IsDirect";
+        private const string CAMERA_POSITION = "CameraPosition";
         private int currentIndex = 0;
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
@@ -227,6 +228,17 @@ namespace _3DGraphics
             }
         }
 
+        public Vector3 CameraPosition
+        {
+            get
+            {
+                return this.getVector3(CAMERA_POSITION);
+            }
+            set
+            {
+                this.setVector3(CAMERA_POSITION, value);
+            }
+        }
         public EffectTechnique CurrentTechnique => effect.CurrentTechnique;
         public GraphicsDevice GraphicsDevice => effect.GraphicsDevice;
     }

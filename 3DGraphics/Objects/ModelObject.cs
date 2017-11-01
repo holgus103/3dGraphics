@@ -19,13 +19,14 @@ namespace _3DGraphics.Objects
             this.scale = scale;
         }
 
-        public override void Draw(Matrix view, Matrix projection)
+        public override void Draw(Matrix view, Matrix projection, Vector3  pos)
         {
             effect.Effect.CurrentTechnique = effect.Effect.Techniques["TextureTeq"];
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (var part in mesh.MeshParts)
                 {
+                    effect.CameraPosition = pos;
                     effect.World = Matrix.CreateScale(this.scale) * this.rotation * Matrix.CreateTranslation(this.position);
                     //part.
                     effect.View = view;

@@ -30,10 +30,11 @@ namespace _3DGraphics.Objects
 
         }
 
-        public override void Draw(Matrix view, Matrix projection)
+        public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
+
             this.position = new Vector3(camera.Position.X, this.level, camera.Position.Z);
-            base.Draw(view, projection);
+            base.Draw(view, projection, pos);
         }
     }
 }
