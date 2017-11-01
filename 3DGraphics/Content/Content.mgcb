@@ -73,6 +73,6 @@
 #begin Phong.fx
 /importer:EffectImporter
 /processor:EffectProcessor
-/processorParam:DebugMode=Auto
+/processorParam:DebugMode=Debug
 /build:Phong.fx
 

@@ -13,26 +13,26 @@ namespace _3DGraphics.Objects
     class VertexObject : ObjectBase
     {
         protected VertexPositionNormalColor[] vertices;
-        protected BasicEffect effect;
+        protected Effect effect;
 
         protected VertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(position, xRotation, yRotation, zRotation)
         {
             var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
 
             //Enables some basic effect characteristics, such as vertex coloring an ddefault lighting.
-
+            this.effect = ctx.Load<Effect>("Phong");
             //this.effect = new PhongShader(ctx);
-            this.effect = new BasicEffect(dev);
-            this.effect.VertexColorEnabled = true;
-            this.effect.LightingEnabled = true;
-            this.effect.EnableDefaultLighting();
+            //this.effect = new BasicEffect(dev);
+            //this.effect.VertexColorEnabled = true;
+            //this.effect.LightingEnabled = true;
+            //this.effect.EnableDefaultLighting();
         }
 
         public override void Draw(Matrix view, Matrix projection)
         {
-            effect.View = view;
-            effect.Projection = projection;
-            effect.World = effect.World = this.rotation * Matrix.CreateTranslation(this.position);
+            effect.Parameters["View"].SetValue(view);
+            effect.Parameters["Projection"].SetValue(projection);
+            effect.Parameters["World"].SetValue(this.rotation * Matrix.CreateTranslation(this.position));
             foreach (var pass in this.effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

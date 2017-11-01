@@ -14,13 +14,13 @@ namespace _3DGraphics
         private const string VIEW = "View";
         private const string PROJECTION = "Projection";
         private const string WORLD = "World";
+        private const string WORLDVIEWPROJ = "WorldViewProj";
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
             if (effect == null)
             {
                 effect = ctx.Load<Effect>("Phong");
-
             }
         }
 
@@ -38,6 +38,18 @@ namespace _3DGraphics
             set
             {
                 this.setMatrix(VIEW, value);
+            }
+        }
+
+        public Matrix WorldViewProj
+        {
+            get
+            {
+                return this.getMatrix(WORLDVIEWPROJ);
+            }
+            set
+            {
+                this.setMatrix(WORLDVIEWPROJ, value);
             }
         }
 

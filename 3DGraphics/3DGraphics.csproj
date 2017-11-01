@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\boat.jpg" />
+    <Content Include="Content\Phong.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
