@@ -10,17 +10,32 @@ namespace _3DGraphics.Objects
 {
     abstract class ObjectBase
     {
-        private static readonly Vector3 Ka = new Vector3(0.2f, 0.2f, 0.2f);
-        private static readonly Vector3 Kd = new Vector3(1f, 1f, 1f);
-        private static readonly Vector3 Ks = new Vector3(1, 1, 1);
-        private const int SHININESS = 100;
+        protected static readonly Vector3 Ka = new Vector3(0.2f, 0.2f, 0.2f);
+        protected static readonly Vector3 Kd = new Vector3(1f, 1f, 1f);
+        protected static readonly Vector3 Ks = new Vector3(1, 1, 1);
+        protected const int SHININESS = 100;
+
+
 
         protected Vector3 position;
         protected Matrix rotation;
         protected static PhongShader effect;
+        private Vector3 ka;
+        private Vector3 kd;
+        private Vector3 ks;
+        private int shininess;
 
-        protected ObjectBase(ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation)
+        protected ObjectBase(ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation) : this(ctx, position, xRotation, yRotation, zRotation, Ka, Kd, Ks)
         {
+            
+        }
+
+        protected ObjectBase(ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation, Vector3 ka, Vector3 kd , Vector3 ks , int shininess = SHININESS)
+        {
+            this.ka = ka;
+            this.ks = ks;
+            this.kd = kd;
+            this.shininess = shininess;
             if (effect == null)
             {
                 effect = new PhongShader(ctx);
@@ -40,10 +55,10 @@ namespace _3DGraphics.Objects
         public virtual void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
             // TODO: Move to baseobject
-            effect.Ka = Ka;
-            effect.Kd = Kd;
-            effect.Ks = Ks;
-            effect.Shininess = SHININESS;
+            effect.Ka = this.ka;
+            effect.Kd = this.kd;
+            effect.Ks = this.kd;
+            effect.Shininess = this.shininess;
             effect.CameraPosition = pos;
             effect.World = this.getWorldMatrix();
             //part.
