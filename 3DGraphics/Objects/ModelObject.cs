@@ -14,23 +14,22 @@ namespace _3DGraphics.Objects
         protected abstract Model Model { get; }
         protected float scale;
 
+        protected override Matrix getWorldMatrix() => Matrix.CreateScale(this.scale) * base.getWorldMatrix();
+
         public ModelObject(Microsoft.Xna.Framework.Content.ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation, float scale) : base(ctx, position, xRotation, yRotation, zRotation)
         {
             this.scale = scale;
         }
 
+        
         public override void Draw(Matrix view, Matrix projection, Vector3  pos)
         {
             effect.Effect.CurrentTechnique = effect.Effect.Techniques["TextureTeq"];
+            base.Draw(view, projection, pos);
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (var part in mesh.MeshParts)
                 {
-                    effect.CameraPosition = pos;
-                    effect.World = Matrix.CreateScale(this.scale) * this.rotation * Matrix.CreateTranslation(this.position);
-                    //part.
-                    effect.View = view;
-                    effect.Projection = projection;
                     part.Effect = effect.Effect;
                 }
 

@@ -10,6 +10,11 @@ namespace _3DGraphics.Objects
 {
     abstract class ObjectBase
     {
+        private static readonly Vector3 Ka = new Vector3(0.2f, 0.2f, 0.2f);
+        private static readonly Vector3 Kd = new Vector3(1f, 1f, 1f);
+        private static readonly Vector3 Ks = new Vector3(1, 1, 1);
+        private const int SHININESS = 100;
+
         protected Vector3 position;
         protected Matrix rotation;
         protected static PhongShader effect;
@@ -30,6 +35,20 @@ namespace _3DGraphics.Objects
             this.position = pos;
         }
 
-        public abstract void Draw(Matrix view, Matrix projection, Vector3 pos);
+        protected virtual Matrix getWorldMatrix() =>  this.rotation * Matrix.CreateTranslation(this.position);
+
+        public virtual void Draw(Matrix view, Matrix projection, Vector3 pos)
+        {
+            // TODO: Move to baseobject
+            effect.Ka = Ka;
+            effect.Kd = Kd;
+            effect.Ks = Ks;
+            effect.Shininess = SHININESS;
+            effect.CameraPosition = pos;
+            effect.World = this.getWorldMatrix();
+            //part.
+            effect.View = view;
+            effect.Projection = projection;
+        }
     }
 }

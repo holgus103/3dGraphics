@@ -19,12 +19,8 @@ namespace _3DGraphics
         private static readonly Vector3 PointLightLd = new Vector3(1, 1, 1);
         private static readonly Vector3 DirectLightLs = new Vector3(1, 1, 1);
         private static readonly Vector3 PointLightLs = new Vector3(1, 1, 1);
-        private static readonly Vector3 Ka = new Vector3(0.2f, 0.2f, 0.2f);
-        private static readonly Vector3 Kd = new Vector3(1f, 1f, 1f);
-        private static readonly Vector3 Ks = new Vector3(1, 1, 1);
-        private static readonly Vector3 Shinyness = new Vector3(1, 1, 1);
+
         private const int COLOR_INTERVAL = 100;
-        private const int SHINYNESS = 100;
         public static void AddLighting(PhongShader effect)
         {
             var currentIndex = 0;
@@ -45,7 +41,7 @@ namespace _3DGraphics
             effect.LightPosition = new[] { DirectLightDirection, PointLightPosition };
             effect.La = new[] { DirectLightLa, PointLightLa };
             effect.Ld = new[] { DirectLightLd, PointLightLd };
-            effect.Ls = new[] { DirectLightLs, DirectLightLs };
+            effect.Ls = new[] { DirectLightLs, PointLightLs };
 
             var t = new Timer()
             {
@@ -62,11 +58,6 @@ namespace _3DGraphics
 
             t.Start();
 
-            // TODO: Move to baseobject
-            effect.Ka = Ka;
-            effect.Kd = Kd;
-            effect.Ks = Ks;
-            effect.Shininess = SHINYNESS;
             effect.IsDirect = new[] { 1.0f, 0.0f };
         }
     }

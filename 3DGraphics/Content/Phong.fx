@@ -149,7 +149,7 @@ float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
 		specSum += spec;
 	}
 
-	float4 tex = float4(1, 0, 0, 1);
+	float4 tex = float4(1, 1, 1, 1);
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
 	//return input.Color;

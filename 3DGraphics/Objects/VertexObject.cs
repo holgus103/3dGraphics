@@ -22,11 +22,8 @@ namespace _3DGraphics.Objects
 
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
-            effect.CameraPosition = pos;
             effect.Effect.CurrentTechnique = effect.Effect.Techniques["NoTextureTeq"];
-            effect.View = view;
-            effect.Projection = projection;
-            effect.World = this.rotation * Matrix.CreateTranslation(this.position);
+            base.Draw(view, projection, pos);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
