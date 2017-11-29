@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace _3DGraphics.Objects
 {
-    class Boat : ModelObject
+    class Boat : TextureModel
     {
+        private const string TEXTURE_PATH = "boat.jpg";
         private static Model model;
+        private static Texture2D texture;
 
-        public Boat(Microsoft.Xna.Framework.Content.ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation, float scale) : base(ctx, position, xRotation, yRotation, zRotation, scale)
+        public Boat(ContentManager ctx, GraphicsDevice dev,  Vector3 position, float xRotation, float yRotation, float zRotation, float scale) : base(ctx, dev, position, xRotation, yRotation, zRotation, scale, TEXTURE_PATH)
         {
             if (Boat.model == null)
             {
@@ -21,5 +24,17 @@ namespace _3DGraphics.Objects
         }
 
         protected override Model Model => Boat.model;
+
+        public override Texture2D Texture
+        {
+            get
+            {
+                return Boat.texture;
+            }
+            set
+            {
+                Boat.texture = value;
+            }
+        }
     }
 }

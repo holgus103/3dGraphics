@@ -25,6 +25,16 @@ float3 Kd;			//Diffuse reflectivity
 float3 Ks;			//Specular reflectivity
 float Shininess;	//Specular shininess factor
 
+texture ModelTexture;
+
+sampler2D TextureSampler = sampler_state {
+	Texture = (ModelTexture);
+	MagFilter = Linear;
+	MinFilter = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
 void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3 diffuse, out float3 spec)
 {
 	float4 Position = mul(pos, View);
@@ -72,8 +82,6 @@ struct VertexShaderOutputTx
 	float3 Normal : NORMAL0;
 	float3 WorldPos : TEXCOORD1;
 };
-
-sampler TextureSampler : register(s0);
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
@@ -148,8 +156,8 @@ float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
 		diffuseSum += diffuse;
 		specSum += spec;
 	}
-
-	float4 tex = float4(1, 1, 1, 1);
+	float4 tex = tex2D(TextureSampler, input.TextCoords);
+	tex.a = 1;
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
 	//return input.Color;

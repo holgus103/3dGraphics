@@ -50,6 +50,7 @@
     <Compile Include="Objects\ModelObject.cs" />
     <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="Objects\Sea.cs" />
+    <Compile Include="Objects\TextureModel.cs" />
     <Compile Include="Objects\VertexObject.cs" />
     <Compile Include="PhongShader.cs" />
     <Compile Include="VertexPositionNormalColor.cs" />

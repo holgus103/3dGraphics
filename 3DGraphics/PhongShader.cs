@@ -27,6 +27,7 @@ namespace _3DGraphics
         private const string LS = "Ls";
         private const string IS_DIRECT = "IsDirect";
         private const string CAMERA_POSITION = "CameraPosition";
+        private const string TEXTURE = "ModelTexture";
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
@@ -40,11 +41,26 @@ namespace _3DGraphics
         private Vector3[] getVector3Array(string name) => this.effect.Parameters[name].GetValueVector3Array();
         private float[] getScalarArray(string name) => this.effect.Parameters[name].GetValueSingleArray();
         private float getScalar(string name) => this.effect.Parameters[name].GetValueSingle();
+        private Texture2D getTexture(string name) => this.effect.Parameters[name].GetValueTexture2D();
         private void setMatrix(string name, Matrix val) => this.effect.Parameters[name].SetValue(val);
         private void setVector3(string name, Vector3 val) => this.effect.Parameters[name].SetValue(val);
         private void setVector3Array(string name, Vector3[] val) => this.effect.Parameters[name].SetValue(val);
         private void setScakarFloat(string name, float[] val) => this.effect.Parameters[name].SetValue(val);
         private void setScalar(string name, float val) => this.effect.Parameters[name].SetValue(val);
+        private void setTexture(string name, Texture2D tex) => this.effect.Parameters[name].SetValue(tex);
+
+
+        public Texture2D Texture
+        {
+            get
+            {
+                return this.getTexture(TEXTURE);
+            }
+            set
+            {
+                this.setTexture(TEXTURE, value);
+            }
+        }
 
         public Matrix View
         {
