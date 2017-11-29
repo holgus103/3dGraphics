@@ -28,6 +28,7 @@ namespace _3DGraphics
         private const string IS_DIRECT = "IsDirect";
         private const string CAMERA_POSITION = "CameraPosition";
         private const string TEXTURE = "ModelTexture";
+        private const string MIXING_TEXTURE = "MixingTexture";
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
@@ -59,6 +60,18 @@ namespace _3DGraphics
             set
             {
                 this.setTexture(TEXTURE, value);
+            }
+        }
+
+        public Texture2D MixingTexture
+        {
+            get
+            {
+                return this.getTexture(MIXING_TEXTURE);
+            }
+            set
+            {
+                this.setTexture(MIXING_TEXTURE, value);
             }
         }
 

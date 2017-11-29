@@ -20,9 +20,10 @@ namespace _3DGraphics.Objects
 
         }
 
+        protected override string Technique => "NoTextureTeq";
+
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
-            effect.Effect.CurrentTechnique = effect.Effect.Techniques["NoTextureTeq"];
             base.Draw(view, projection, pos);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {

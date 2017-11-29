@@ -1,10 +1,10 @@
 ﻿#if OPENGL
-	#define SV_POSITION POSITION
-	#define VS_SHADERMODEL vs_3_0
-	#define PS_SHADERMODEL ps_3_0
+#define SV_POSITION POSITION
+#define VS_SHADERMODEL vs_3_0
+#define PS_SHADERMODEL ps_3_0
 #else
-	#define VS_SHADERMODEL vs_4_0_level_9_3
-	#define PS_SHADERMODEL ps_4_0_level_9_3
+#define VS_SHADERMODEL vs_4_0_level_9_3
+#define PS_SHADERMODEL ps_4_0_level_9_3
 #endif
 #define LIGHTS_COUNT 2
 matrix World;
@@ -18,16 +18,25 @@ float3 Ld[LIGHTS_COUNT];		//Diffuse light intensity
 float3 Ls[LIGHTS_COUNT];		//Specular light intensity
 float IsDirect[LIGHTS_COUNT];
 
-
 // Material info
 float3 Ka;			//Ambient reflectivity
 float3 Kd;			//Diffuse reflectivity
 float3 Ks;			//Specular reflectivity
 float Shininess;	//Specular shininess factor
 
-texture ModelTexture;
+texture2D MixingTexture;
 
-sampler2D TextureSampler = sampler_state {
+sampler2D MixingSampler : register (s1) = sampler_state {
+	Texture = (MixingTexture);
+	MagFilter = Linear;
+	MinFilter = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+texture2D ModelTexture;
+
+sampler2D TextureSampler : register (s0) = sampler_state {
 	Texture = (ModelTexture);
 	MagFilter = Linear;
 	MinFilter = Linear;
@@ -107,7 +116,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	//ambientSum = float3(0.1, 0.1, 0.1);
 	//diffuseSum = float3(0.1, 0.1, 0.1);
 	//specSum = float3(0.1, 0.1, 0.1);
-	for (int i = 0; i<LIGHTS_COUNT; i++)
+	for (int i = 0; i < LIGHTS_COUNT; i++)
 	{
 		processLight(i, input.WorldPos, input.Normal, ambient, diffuse, spec);
 		ambientSum += ambient;
@@ -146,17 +155,37 @@ float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
 	// output params
 
 	float3 ambient, diffuse, spec;
-	//ambientSum = float3(0.1, 0.1, 0.1);
-	//diffuseSum = float3(0.1, 0.1, 0.1);
-	//specSum = float3(0.1, 0.1, 0.1);
-	for (int i = 0; i<LIGHTS_COUNT; i++)
+	for (int i = 0; i < LIGHTS_COUNT; i++)
 	{
 		processLight(i, input.WorldPos, input.Normal, ambient, diffuse, spec);
 		ambientSum += ambient;
 		diffuseSum += diffuse;
 		specSum += spec;
 	}
-	float4 tex = tex2D(TextureSampler, input.TextCoords);
+	float4 tex = tex2D(MixingSampler, input.TextCoords);
+	tex.a = 1;
+	ambientSum /= LIGHTS_COUNT;
+	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
+}
+
+float4 PixelShaderTxMixingFunction(VertexShaderOutputTx input) : COLOR0
+{
+	float3 ambientSum = (float3)0;
+	float3 diffuseSum = (float3)0;
+	float3 specSum = (float3)0;
+	// output params
+
+	float3 ambient, diffuse, spec;
+	for (int i = 0; i < LIGHTS_COUNT; i++)
+	{
+		processLight(i, input.WorldPos, input.Normal, ambient, diffuse, spec);
+		ambientSum += ambient;
+		diffuseSum += diffuse;
+		specSum += spec;
+	}
+	float4 tex = tex2D(MixingSampler, input.TextCoords);
+	float4 tex2 = tex2D(TextureSampler, input.TextCoords);
+	tex = (tex + tex2) / 2;
 	tex.a = 1;
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
@@ -179,5 +208,14 @@ technique TextureTeq
 	{
 		VertexShader = compile VS_SHADERMODEL VertexShaderTxFunction();
 		PixelShader = compile PS_SHADERMODEL PixelShaderTxFunction();
+	}
+};
+
+technique TextureTeqMixing
+{
+	pass P0
+	{
+		VertexShader = compile VS_SHADERMODEL VertexShaderTxFunction();
+		PixelShader = compile PS_SHADERMODEL PixelShaderTxMixingFunction();
 	}
 };

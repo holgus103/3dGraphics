@@ -13,6 +13,7 @@ namespace _3DGraphics.Objects
     {
         private Camera camera;
         private float level;
+        protected override string Technique => "TextureTeqMixing";
 
         public Sea(ContentManager ctx, Camera camera, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0)
         {

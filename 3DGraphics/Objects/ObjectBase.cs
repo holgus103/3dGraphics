@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -10,12 +11,14 @@ namespace _3DGraphics.Objects
 {
     abstract class ObjectBase
     {
+
+        protected abstract string Technique { get; }
         protected static readonly Vector3 Ka = new Vector3(0.2f, 0.2f, 0.2f);
         protected static readonly Vector3 Kd = new Vector3(1f, 1f, 1f);
         protected static readonly Vector3 Ks = new Vector3(1, 1, 1);
         protected const int SHININESS = 100;
 
-
+        
 
         protected Vector3 position;
         protected Matrix rotation;
@@ -54,14 +57,13 @@ namespace _3DGraphics.Objects
 
         public virtual void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
-            // TODO: Move to baseobject
+            effect.Effect.CurrentTechnique = effect.Effect.Techniques[this.Technique];
             effect.Ka = this.ka;
             effect.Kd = this.kd;
-            effect.Ks = this.kd;
+            effect.Ks = this.ks;
             effect.Shininess = this.shininess;
             effect.CameraPosition = pos;
             effect.World = this.getWorldMatrix();
-            //part.
             effect.View = view;
             effect.Projection = projection;
         }
