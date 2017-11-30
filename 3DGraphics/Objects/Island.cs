@@ -21,10 +21,9 @@ namespace _3DGraphics.Objects
             return normal;
         }
 
-        public Island(ContentManager ctx, float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, dev, position, xRotation, yRotation, zRotation)
+        public Island(ContentManager ctx, float noise, float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, dev, position, xRotation, yRotation, zRotation)
         {
-            var v = new PerlinNoise(100, 100, 100, 1, 1, 1);
-            var a = v.getMap();
+            var map = new PerlinNoise(new Random().Next(), 2 * 90 / degree + 1, 2 * 90 / degree + 1, 1, 1, 1).getMap();
             this.degree = degree;
             var fragmentVertices = new List<Vector3>(90 / degree + 1);
             var v1 = new Vector3(radius, 0, 0);
@@ -38,8 +37,12 @@ namespace _3DGraphics.Objects
 
             for (var i = 0; i < 360 / degree; i++)
             {
-                var f1 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians(i * degree)))).ToList();
-                var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) * degree)))).ToList();
+                var f1 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians(i * degree))))
+                    .Select(v => new Vector3(v.X, v.Y + noise * getShift(degree, radius, map, v.X, v.Z), v.Z))
+                    .ToList();
+                var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) * degree))))
+                    .Select(v => new Vector3(v.X, v.Y + noise *  getShift(degree, radius, map, v.X, v.Z), v.Z))
+                    .ToList();
 
                 for (var j = 0; j < 90 / degree; j++)
                 {
@@ -62,8 +65,24 @@ namespace _3DGraphics.Objects
 
             }
 
+
         }
 
-
+        private static float getShift(int degree, float radius, double[] map, float xCord, float zCord)
+        {
+            var rowSize = 90 / degree * 2;
+            // shift
+            var x = xCord + radius;
+            var z = zCord + radius;
+            // normalize
+            x = x / 2 / radius;
+            z = z / 2 / radius;
+            // get row and column index
+            x = x * rowSize;
+            z = z * rowSize;
+            // calculate final index
+            var i = (int)(rowSize * x + z);
+            return (float)map[i];
+        }
     }
 }
