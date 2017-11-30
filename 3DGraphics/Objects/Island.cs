@@ -41,7 +41,7 @@ namespace _3DGraphics.Objects
                     .Select(v => new Vector3(v.X, v.Y + noise * getShift(degree, radius, map, v.X, v.Z), v.Z))
                     .ToList();
                 var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) * degree))))
-                    .Select(v => new Vector3(v.X, v.Y + noise *  getShift(degree, radius, map, v.X, v.Z), v.Z))
+                    .Select(v => new Vector3(v.X, v.Y + noise * getShift(degree, radius, map, v.X, v.Z), v.Z))
                     .ToList();
 
                 for (var j = 0; j < 90 / degree; j++)

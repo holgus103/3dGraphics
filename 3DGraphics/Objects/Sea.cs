@@ -19,11 +19,14 @@ namespace _3DGraphics.Objects
         private static Texture2D mixingTexture;
         private static Texture2D texture;
         protected override string Technique => "TextureTeqMixing";
+        private float displacementRay;
+        private float displacementCounter;
         
         
 
-        public Sea(ContentManager ctx, Camera camera, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0, TEXTURE_PATH)
+        public Sea(ContentManager ctx, Camera camera, float displacementRay, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0, TEXTURE_PATH)
         {
+            this.displacementRay = displacementRay;
             mixingTexture = this.LoadTexture(MIXING_TEXTURE_PATH, dev);
             this.camera = camera;
             this.level = level;
@@ -42,6 +45,10 @@ namespace _3DGraphics.Objects
 
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
+            // update displacement
+            displacementCounter += (float)(XnaFun.FrameTime.TotalMilliseconds / 1000);
+            displacementCounter = displacementCounter - (int) displacementCounter;
+            effect.Displacement = new Vector2(displacementRay * (displacementCounter - 2.0f)*(displacementCounter - 2.0f));
             effect.MixingTexture = mixingTexture;
             this.position = new Vector3(camera.Position.X, this.level, camera.Position.Z);
             base.Draw(view, projection, pos);

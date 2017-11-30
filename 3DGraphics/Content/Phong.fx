@@ -23,6 +23,7 @@ float3 Ka;			//Ambient reflectivity
 float3 Kd;			//Diffuse reflectivity
 float3 Ks;			//Specular reflectivity
 float Shininess;	//Specular shininess factor
+float2 Displacement;
 
 texture2D MixingTexture;
 
@@ -49,11 +50,8 @@ void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3
 	float4 Position = mul(pos, View);
 	float3 s = (float3)0;
 	float3 n = normalize(norm);
-	//float vn = mul(float4(norm,0), View);
-	//s = IsDirect[i] * normalize(-LightPosition[i]) + (1 - IsDirect[i]) * normalize(LightPosition[i] - pos);
 	s = IsDirect[i] * normalize(-LightPosition[i]) + (1 - IsDirect[i]) * normalize(LightPosition[i] - pos);
 	float3 v = normalize(CameraPosition - pos);
-	//float3 sv = mul(s, View);
 	float3 r = reflect(-s, n);
 
 	ambient = La[i] * Ka;
@@ -113,9 +111,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 specSum = (float3)0;
 	// output params
 	float3 ambient, diffuse, spec;
-	//ambientSum = float3(0.1, 0.1, 0.1);
-	//diffuseSum = float3(0.1, 0.1, 0.1);
-	//specSum = float3(0.1, 0.1, 0.1);
 	for (int i = 0; i < LIGHTS_COUNT; i++)
 	{
 		processLight(i, input.WorldPos, input.Normal, ambient, diffuse, spec);
@@ -128,8 +123,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	specSum = saturate(specSum);
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * input.Color + float4(specSum, 1);
-	//return input.Color;
-	//return float4(1,0,0,1);
 }
 
 //TEXTURE VERSION
@@ -183,7 +176,7 @@ float4 PixelShaderTxMixingFunction(VertexShaderOutputTx input) : COLOR0
 		diffuseSum += diffuse;
 		specSum += spec;
 	}
-	float4 tex = tex2D(MixingSampler, input.TextCoords);
+	float4 tex = tex2D(MixingSampler, (input.TextCoords + Displacement));
 	float4 tex2 = tex2D(TextureSampler, input.TextCoords);
 	tex = (tex + tex2) / 2;
 	tex.a = 1;

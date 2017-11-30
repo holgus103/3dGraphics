@@ -29,6 +29,7 @@ namespace _3DGraphics
         private const string CAMERA_POSITION = "CameraPosition";
         private const string TEXTURE = "ModelTexture";
         private const string MIXING_TEXTURE = "MixingTexture";
+        private const string DISPLACEMENT = "Displacement";
 
         public PhongShader(Microsoft.Xna.Framework.Content.ContentManager ctx)
         {
@@ -39,12 +40,14 @@ namespace _3DGraphics
 
         private Matrix getMatrix(string name) => this.effect.Parameters[name].GetValueMatrix();
         private Vector3 getVector3(string name) => this.effect.Parameters[name].GetValueVector3();
+        private Vector2 getVector2(string name) => this.effect.Parameters[name].GetValueVector2();
         private Vector3[] getVector3Array(string name) => this.effect.Parameters[name].GetValueVector3Array();
         private float[] getScalarArray(string name) => this.effect.Parameters[name].GetValueSingleArray();
         private float getScalar(string name) => this.effect.Parameters[name].GetValueSingle();
         private Texture2D getTexture(string name) => this.effect.Parameters[name].GetValueTexture2D();
         private void setMatrix(string name, Matrix val) => this.effect.Parameters[name].SetValue(val);
         private void setVector3(string name, Vector3 val) => this.effect.Parameters[name].SetValue(val);
+        private void setVector2(string name, Vector2 val) => this.effect.Parameters[name].SetValue(val);
         private void setVector3Array(string name, Vector3[] val) => this.effect.Parameters[name].SetValue(val);
         private void setScakarFloat(string name, float[] val) => this.effect.Parameters[name].SetValue(val);
         private void setScalar(string name, float val) => this.effect.Parameters[name].SetValue(val);
@@ -227,6 +230,20 @@ namespace _3DGraphics
                 this.setVector3(CAMERA_POSITION, value);
             }
         }
+
+        public Vector2 Displacement
+        {
+            get
+            {
+                return this.getVector2(DISPLACEMENT);
+            }
+            set
+            {
+                this.setVector2(DISPLACEMENT, value);
+            }
+        }
+
+
         public EffectTechnique CurrentTechnique => effect.CurrentTechnique;
         public GraphicsDevice GraphicsDevice => effect.GraphicsDevice;
     }
