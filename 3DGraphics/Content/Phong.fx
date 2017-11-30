@@ -162,7 +162,7 @@ float4 PixelShaderTxFunction(VertexShaderOutputTx input) : COLOR0
 		diffuseSum += diffuse;
 		specSum += spec;
 	}
-	float4 tex = tex2D(MixingSampler, input.TextCoords);
+	float4 tex = tex2D(TextureSampler, input.TextCoords);
 	tex.a = 1;
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
