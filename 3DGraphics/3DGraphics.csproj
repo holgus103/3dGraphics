@@ -82,6 +82,15 @@
     <None Include="Content\PirateFlag.obj" />
     <None Include="Content\Row_Boat.FBX" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PerlinNoise\PerlinNoise.vcxproj">
+      <Project>{0a56249f-0425-4929-a798-a7a1cd65eb3a}</Project>
+      <Name>PerlinNoise</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Map\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

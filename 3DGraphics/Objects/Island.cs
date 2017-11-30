@@ -23,7 +23,8 @@ namespace _3DGraphics.Objects
 
         public Island(ContentManager ctx, float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, dev, position, xRotation, yRotation, zRotation)
         {
-
+            //    var v = new PerlinNoise(100, 100, 100);
+            //    var a = v.getMap();
             this.degree = degree;
             var fragmentVertices = new List<Vector3>(90 / degree + 1);
             var v1 = new Vector3(radius, 0, 0);

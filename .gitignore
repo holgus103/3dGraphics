@@ -4,3 +4,7 @@
 3DGraphics/Content/bin/
 3DGraphics/Content/obj/
 *.tmp 
+Debug/
+PerlinNoise/Debug/
+*.db
+*opendb
