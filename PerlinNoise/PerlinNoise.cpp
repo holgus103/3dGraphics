@@ -8,11 +8,10 @@
 // source http://mrl.nyu.edu/~perlin/noise/)
 
 
-PerlinNoise::PerlinNoise(int seed, int height, int width) : map(std::vector<char>()), p(std::vector<int>()) {
-	//this.
+PerlinNoise::PerlinNoise(int seed, int height, int width, double xm, double ym, double zm) : p(std::vector<int>()) {
+	this->map = gcnew array<double>(height * width);
 	//this->p =  std::vector<int>();
 	//this->map = std::vector<unsigned char>();
-
 	p.resize(256);
 	this->height = height;
 	this->width = width;
@@ -26,11 +25,7 @@ PerlinNoise::PerlinNoise(int seed, int height, int width) : map(std::vector<char
 			double x = (double)j / ((double)width);
 			double y = (double)i / ((double)height);
 
-			double n = this->noise(10 * x, 10 * y, 0.8);
-
-			this->map.push_back(floor(255 * n));
-			this->map.push_back(floor(255 * n));
-			this->map.push_back(floor(255 * n));
+			this->map[i * width + j] = this->noise(xm * x, ym * y, zm);
 		}
 	}
 }
@@ -81,11 +76,7 @@ double PerlinNoise::grad(int hash, double x, double y, double z) {
 }
 
 
-array<Byte>^ PerlinNoise::getMap() 
+array<double>^ PerlinNoise::getMap() 
 {
-	auto arr = gcnew array<Byte>(this->height * this->width);
-	for (auto i = 0; i < this->map.size(); i++) {
-		arr[i] = this->map[i];
-	}
-	return arr;
+	return this->map;
 }

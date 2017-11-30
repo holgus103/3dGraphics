@@ -10,7 +10,7 @@ using namespace System;
 
 public ref class PerlinNoise {
 
-	std::vector<char>& map;
+	array<double>^ map;
 	int height;
 	int width;
 
@@ -20,7 +20,7 @@ public ref class PerlinNoise {
 	double lerp(double t, double a, double b);
 	double grad(int hash, double x, double y, double z);
 public:
-	PerlinNoise(int seed, int height, int width);
-	array<Byte>^ getMap();
+	PerlinNoise(int seed, int height, int width, double xm, double ym, double zm);
+	array<double>^ getMap();
 
 };
