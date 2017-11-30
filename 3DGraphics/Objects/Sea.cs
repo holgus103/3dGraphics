@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,12 @@ namespace _3DGraphics.Objects
         protected override string Technique => "TextureTeqMixing";
         private float displacementRay;
         private float displacementCounter;
-        
-        
+        private int displacementSpeed;
 
-        public Sea(ContentManager ctx, Camera camera, float displacementRay, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0, TEXTURE_PATH)
+
+        public Sea(ContentManager ctx, Camera camera, int displacementSpeed, float displacementRay, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0, TEXTURE_PATH)
         {
+            this.displacementSpeed = displacementSpeed;
             this.displacementRay = displacementRay;
             mixingTexture = this.LoadTexture(MIXING_TEXTURE_PATH, dev);
             this.camera = camera;
@@ -46,9 +48,10 @@ namespace _3DGraphics.Objects
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
             // update displacement
-            displacementCounter += (float)(XnaFun.FrameTime.TotalMilliseconds / 1000);
+            displacementCounter += (float)(XnaFun.FrameTime.TotalMilliseconds / this.displacementSpeed);
             displacementCounter = displacementCounter - (int) displacementCounter;
-            effect.Displacement = new Vector2(displacementRay * (displacementCounter - 2.0f)*(displacementCounter - 2.0f));
+            //Debug.WriteLine((displacementCounter - 0.5f) * (displacementCounter - 0.5f));
+            effect.Displacement = new Vector2(displacementRay * (displacementCounter - 0.5f)*(displacementCounter - 0.5f));
             effect.MixingTexture = mixingTexture;
             this.position = new Vector3(camera.Position.X, this.level, camera.Position.Z);
             base.Draw(view, projection, pos);
