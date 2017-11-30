@@ -10,9 +10,10 @@ using Microsoft.Xna.Framework.Content;
 
 namespace _3DGraphics.Objects
 {
-    class VertexObject : ObjectBase
+    class VertexObject<T> : ObjectBase 
+        where T : struct, IVertexType
     {
-        protected VertexPositionNormalColor[] vertices;
+        protected T[] vertices;
 
         protected VertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, position, xRotation, yRotation, zRotation)
         {
@@ -28,7 +29,7 @@ namespace _3DGraphics.Objects
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                effect.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, this.vertices, 0,this.vertices.Length, Enumerable.Range(0, this.vertices.Length).ToArray(), 0, this.vertices.Length / 3);
+                effect.GraphicsDevice.DrawUserIndexedPrimitives<T>(PrimitiveType.TriangleList, this.vertices, 0,this.vertices.Length, Enumerable.Range(0, this.vertices.Length).ToArray(), 0, this.vertices.Length / 3);
 
             }
         }

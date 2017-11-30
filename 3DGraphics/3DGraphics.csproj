@@ -46,10 +46,13 @@
     <Compile Include="Objects\Boat.cs" />
     <Compile Include="Objects\Flag.cs" />
     <Compile Include="Objects\Island.cs" />
+    <Compile Include="Objects\Commons\ITextured.cs" />
     <Compile Include="Objects\Lighthouse.cs" />
     <Compile Include="Objects\ModelObject.cs" />
     <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="Objects\Sea.cs" />
+    <Compile Include="Objects\Commons\Textured.cs" />
+    <Compile Include="Objects\TexturedVertexObject.cs" />
     <Compile Include="Objects\TextureModel.cs" />
     <Compile Include="Objects\VertexObject.cs" />
     <Compile Include="PhongShader.cs" />

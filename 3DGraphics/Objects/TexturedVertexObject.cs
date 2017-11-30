@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +10,9 @@ using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    abstract class TextureModel : ModelObject, ITextured
+    abstract class TexturedVertexObject : VertexObject<VertexPositionNormalTexture>, ITextured
     {
-        public abstract Texture2D Texture { get; set; }
-
-        protected TextureModel(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation, float scale, string texturePath) : base(ctx, position, xRotation, yRotation, zRotation, scale)
+        protected TexturedVertexObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation, string texturePath) : base(ctx, dev, position, xRotation, yRotation, zRotation)
         {
             this.InitTexture(texturePath, dev);
         }
@@ -25,6 +22,7 @@ namespace _3DGraphics.Objects
             effect.Texture = this.Texture;
             base.Draw(view, projection, pos);
         }
-    }
 
+        public abstract Texture2D Texture { get; set; }
+    }
 }

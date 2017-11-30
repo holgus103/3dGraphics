@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace _3DGraphics.Objects
 {
-    class Island : VertexObject
+    class Island : VertexObject<VertexPositionNormalColor>
     {
         private int degree;
 
