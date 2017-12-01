@@ -14,14 +14,16 @@ namespace _3DGraphics.Objects
     {
         private int degree;
 
-        private Vector3 getNormalVector(Vector3 point)
+        private Vector3 getNormalVector(Vector3 point, Vector3 n1, Vector3 n2)
         {
-            var normal = new Vector3(point.X, point.Y, point.Z);
+            var normal = Vector3.Cross(n1 - point, n2 - point);
             normal.Normalize();
             return normal;
         }
 
-        public Island(ContentManager ctx, float noise, float curvyness, int degree, float radius, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, dev, position, xRotation, yRotation, zRotation)
+        public Island(ContentManager ctx, float noise, float curvyness, int degree, float radius, GraphicsDevice dev,
+            Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, dev, position, xRotation,
+            yRotation, zRotation)
         {
             var map = new PerlinNoise(new Random().Next(), 2 * 90 / degree + 1, 2 * 90 / degree + 1, 1, 1, 1).getMap();
             this.degree = degree;
@@ -32,36 +34,72 @@ namespace _3DGraphics.Objects
             //generate fragment
             for (var i = 0; i <= 90 / degree; i++)
             {
-                fragmentVertices.Add(Vector3.Multiply(Vector3.Transform(v1, Matrix.CreateRotationZ(MathHelper.ToRadians(degree * i))), 1 - curvyness * (float)Math.Sin(MathHelper.ToRadians(i * degree))));
+                fragmentVertices.Add(Vector3.Multiply(
+                    Vector3.Transform(v1, Matrix.CreateRotationZ(MathHelper.ToRadians(degree * i))),
+                    1 - curvyness * (float) Math.Sin(MathHelper.ToRadians(i * degree))));
             }
 
             for (var i = 0; i < 360 / degree; i++)
             {
-                var f1 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians(i * degree))))
+                var f1 = fragmentVertices.Select(e =>
+                        Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians(i * degree))))
                     .Select(v => new Vector3(v.X, v.Y + noise * getShift(degree, radius, map, v.X, v.Z), v.Z))
                     .ToList();
-                var f2 = fragmentVertices.Select(e => Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) * degree))))
+                var f2 = fragmentVertices.Select(e =>
+                        Vector3.Transform(e, Matrix.CreateRotationY(MathHelper.ToRadians((i + 1) * degree))))
                     .Select(v => new Vector3(v.X, v.Y + noise * getShift(degree, radius, map, v.X, v.Z), v.Z))
                     .ToList();
 
                 for (var j = 0; j < 90 / degree; j++)
                 {
                     var currentVertexNumber = i * 90 / degree * 6 + j * 6;
-                    var normal = this.getNormalVector(f1[0 + j]);
-                    this.vertices[currentVertexNumber] = new VertexPositionNormalColor(f1[0 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f2[0 + j]);
-                    this.vertices[currentVertexNumber + 2] = new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f1[1 + j]);
-                    this.vertices[currentVertexNumber + 1] = new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
+                    var normal = this.getNormalVector(f1[0 + j], f1[1 + j], f2[0 + j]);
+                    this.vertices[currentVertexNumber] =
+                        new VertexPositionNormalColor(f1[0 + j], normal, Color.SandyBrown);
+                    this.vertices[0].Normal = new Vector3(1, 1, 1);
+                    normal = this.getNormalVector(f2[0 + j], f1[0 + j], f1[1 + j]);
+                    this.vertices[currentVertexNumber + 2] =
+                        new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f1[1 + j], f2[0 + j], f1[0 + j]);
+                    this.vertices[currentVertexNumber + 1] =
+                        new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
 
-                    normal = this.getNormalVector(f1[1 + j]);
-                    this.vertices[currentVertexNumber + 4] = new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f2[0 + j]);
-                    this.vertices[currentVertexNumber + 3] = new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f2[1 + j]);
-                    this.vertices[currentVertexNumber + 5] = new VertexPositionNormalColor(f2[1 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f1[1 + j], f2[1 + j], f2[0 + j]);
+                    this.vertices[currentVertexNumber + 4] =
+                        new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f2[0 + j], f1[1 + j], f2[0 + j]);
+                    this.vertices[currentVertexNumber + 3] =
+                        new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f2[1 + j], f2[0 + j], f1[1 + j]);
+                    this.vertices[currentVertexNumber + 5] =
+                        new VertexPositionNormalColor(f2[1 + j], normal, Color.SandyBrown);
                 }
 
+
+            }
+            for (var i = 0; i < 360 / degree; i++)
+            {
+                var index = i * 90 / degree * 6;
+                var indexN = (i + 1) * 90 / degree * 6;
+                if (indexN > 360 / degree)
+                {
+                    indexN = 0;
+                }
+                // handle bottom
+                this.vertices[index].Normal = (this.vertices[index].Normal + this.vertices[indexN + 2].Normal + this.vertices[indexN + 3].Normal) / 3;
+
+                for (var j = 1; j < 90 / degree; j++)
+                {
+                    var layerShift = 6 * j;
+                    this.vertices[index + layerShift].Normal = (
+                                                                   this.vertices[index + layerShift].Normal +
+                                                                   this.vertices[index + layerShift - 2].Normal +
+                                                                   this.vertices[index + layerShift - 5].Normal +
+                                                                   this.vertices[indexN + layerShift + 2].Normal +
+                                                                   this.vertices[index + layerShift + 3].Normal +
+                                                                   this.vertices[index + layerShift - 1].Normal
+                                                               ) / 6;
+                }
 
             }
 
