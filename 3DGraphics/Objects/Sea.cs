@@ -22,13 +22,15 @@ namespace _3DGraphics.Objects
         private const string MIXING_TEXTURE_PATH2 = "Content\\Images\\sea3.jpg";
         private static Texture2D mixingTexture;
         private static Texture2D mixingTexture2;
-        private static Texture2D currentMixingTexture;
+        private Texture2D currentMixingTexture;
         private static Texture2D texture;
         protected override string Technique => "TextureTeqMixing";
         private float displacementRay;
         private float displacementCounter;
-        private int displacementSpeed;
-        private static bool imminentTextureChange;
+        private int displacementSpeed = 1;
+        private bool imminentTextureChange;
+        private bool plusDown;
+        private bool minusDown;
 
 
         public Sea(ContentManager ctx, Camera camera, int displacementSpeed, float displacementRay, float level, GraphicsDevice dev, float diagLength) : base(ctx, dev, new Vector3(camera.Position.X, level, camera.Position.Z), 0, 0, 0, TEXTURE_PATH)
@@ -76,20 +78,51 @@ namespace _3DGraphics.Objects
             }
         }
 
-        public static void ChangeMixingTexture()
+        private void ChangeMixingTexture() =>
+            this.ensureKeyRelease(
+                () => this.currentMixingTexture = this.currentMixingTexture == mixingTexture ? mixingTexture2 : mixingTexture, 
+                ref this.imminentTextureChange, 
+                Keys.F1);
+
+
+
+        private void ensureKeyRelease(Action a, ref bool flag, Keys k)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.F1))
+            if (Keyboard.GetState().IsKeyDown(k))
             {
-                imminentTextureChange = true;
+                flag = true;
             }
             else
             {
-                if (imminentTextureChange)
+                if (flag)
                 {
-                    currentMixingTexture = currentMixingTexture == mixingTexture ? mixingTexture2 : mixingTexture;
-                    imminentTextureChange = false;
+                    a();
+                    flag = false;
                 }
             }
-        } 
+        }
+
+        private void IncreaseWaveSpeed() =>
+            this.ensureKeyRelease(
+                () => this.displacementSpeed -=  this.displacementSpeed > 0 ? 1000 : 0,
+                ref this.plusDown,
+                Keys.OemPlus
+                );
+
+
+        private void DecreaseWaveSpeed() =>
+            this.ensureKeyRelease(
+                () => this.displacementSpeed += 1000,
+                ref this.minusDown,
+                Keys.OemMinus
+            );
+
+        public void Control()
+        {
+            this.IncreaseWaveSpeed();
+            this.DecreaseWaveSpeed();
+            this.ChangeMixingTexture();
+        }
+
     }
 }
