@@ -10,9 +10,25 @@ namespace _3DGraphics.Effects
 {
     class SkyBoxShader : EffectBase
     {
-        public SkyBoxShader(ContentManager ctx) : base(ctx, "Effects\\SkyBoxShader")
+
+        protected const string TEXTURE = "ModelTexture";
+        public SkyBoxShader(ContentManager ctx) : base(ctx, "Shaders\\SkyBoxShader")
         {
 
+        }
+
+
+
+        public TextureCube Texture
+        {
+            get
+            {
+                return this.getTextureCube(TEXTURE);
+            }
+            set
+            {
+                this.setTextureCube(TEXTURE, value);
+            }
         }
     }
 }

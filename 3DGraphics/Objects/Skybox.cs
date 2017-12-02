@@ -18,7 +18,9 @@ namespace _3DGraphics.Objects
         public override EffectBase Effect => effect;
         protected static Model model;
         protected override string Technique => "Main";
-        protected static EffectBase effect;
+        protected static SkyBoxShader effect;
+        protected static TextureCube tx;
+        protected float size;
 
         protected override void initEffect(ContentManager ctx)
         {
@@ -28,21 +30,28 @@ namespace _3DGraphics.Objects
             }
         }
 
-        public Skybox(ContentManager ctx) : base(ctx)
+        public Skybox(ContentManager ctx, float size = 50.0f) : base(ctx)
         {
             if (model == null)
             {
                 model = ctx.Load<Model>("Models\\cube");
             }
+            if (tx == null)
+            {
+                tx = ctx.Load<TextureCube>("Images\\Islands");
+            }
+
         }
+
+        protected override Matrix getWorldMatrix() => Matrix.CreateScale(this.size) * Matrix.CreateTranslation(this.position);
+
 
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
-
+            this.position = pos;
+            effect.Texture = tx; 
             base.Draw(view, projection, pos);
             this.DrawModel(view, projection, pos);
         }
-
-        public TextureCube Texture{ get; set; }
     }
 }

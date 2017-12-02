@@ -23,6 +23,7 @@ namespace _3DGraphics.Effects
         protected float[] getScalarArray(string name) => this.Effect.Parameters[name].GetValueSingleArray();
         protected float getScalar(string name) => this.Effect.Parameters[name].GetValueSingle();
         protected Texture2D getTexture(string name) => this.Effect.Parameters[name].GetValueTexture2D();
+        protected TextureCube getTextureCube(string name) => this.Effect.Parameters[name].GetValueTextureCube();
         protected void setMatrix(string name, Matrix val) => this.Effect.Parameters[name].SetValue(val);
         protected void setVector3(string name, Vector3 val) => this.Effect.Parameters[name].SetValue(val);
         protected void setVector2(string name, Vector2 val) => this.Effect.Parameters[name].SetValue(val);
@@ -30,6 +31,7 @@ namespace _3DGraphics.Effects
         protected void setScakarFloat(string name, float[] val) => this.Effect.Parameters[name].SetValue(val);
         protected void setScalar(string name, float val) => this.Effect.Parameters[name].SetValue(val);
         protected void setTexture(string name, Texture2D tex) => this.Effect.Parameters[name].SetValue(tex);
+        protected void setTextureCube(string name, TextureCube tex) => this.Effect.Parameters[name].SetValue(tex);
 
         protected EffectBase(ContentManager ctx, string path) : base(ctx.Load<Effect>(path))
         {

@@ -76,6 +76,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\Islands.dds" />
+    <Content Include="Content\Images\sea1.jpg" />
+    <Content Include="Content\Images\sea2.jpg" />
     <Content Include="Content\Models\boat.jpg" />
     <Content Include="Content\Islands.dds" />
     <Content Include="Content\Shaders\SkyBoxShader.fx" />
@@ -98,7 +101,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Images\" />
     <Folder Include="Map\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
