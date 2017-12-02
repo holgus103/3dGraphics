@@ -80,7 +80,6 @@
     <Content Include="Content\Images\sea1.jpg" />
     <Content Include="Content\Images\sea2.jpg" />
     <Content Include="Content\Models\boat.jpg" />
-    <Content Include="Content\Islands.dds" />
     <Content Include="Content\Shaders\SkyBoxShader.fx" />
     <Content Include="Content\Shaders\Phong.fx" />
     <Content Include="Icon.ico" />

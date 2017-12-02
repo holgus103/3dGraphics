@@ -83,6 +83,7 @@ namespace _3DGraphics
                 Exit();
 
             this.camera.Move(FrameTime);
+            Sea.ChangeMixingTexture();
 
             this.lastUpdate = DateTime.Now;
             base.Update(gameTime);

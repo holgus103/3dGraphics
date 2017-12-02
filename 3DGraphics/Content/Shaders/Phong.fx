@@ -31,8 +31,8 @@ sampler2D MixingSampler : register (s1) = sampler_state {
 	Texture = (MixingTexture);
 	MagFilter = Linear;
 	MinFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
+	AddressU = Wrap;
+	AddressV = Wrap;
 };
 
 texture2D ModelTexture;
@@ -41,8 +41,8 @@ sampler2D TextureSampler : register (s0) = sampler_state {
 	Texture = (ModelTexture);
 	MagFilter = Linear;
 	MinFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
+	AddressU = Wrap;
+	AddressV = Wrap;
 };
 
 void processLight(int i, float3 pos, float3 norm, out float3 ambient, out float3 diffuse, out float3 spec)
