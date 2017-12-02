@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    class Lighthouse : ModelObject
+    class Lighthouse : ModelPhongObject
     {
         private static Model model;
 
@@ -16,10 +17,10 @@ namespace _3DGraphics.Objects
         {
             if (Lighthouse.model == null)
             {
-                Lighthouse.model = ctx.Load<Model>("Lighthouse_Lit");
+                Lighthouse.model = ctx.Load<Model>("Models\\Lighthouse_Lit");
             }
         }
 
-        protected override Model Model => Lighthouse.model;
+        public override Model Model => Lighthouse.model;
     }
 }

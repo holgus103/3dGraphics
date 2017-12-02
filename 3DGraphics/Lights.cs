@@ -6,6 +6,7 @@ using System.Timers;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using _3DGraphics.Effects;
 
 namespace _3DGraphics
 {

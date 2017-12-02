@@ -17,7 +17,7 @@ namespace _3DGraphics
         private Camera camera = new Camera(new Vector3(0, 0, 50));
 
 
-        private List<ObjectBase> elements = new List<ObjectBase>();
+        private List<Base> elements = new List<Base>();
 
         public XnaFun()
         {

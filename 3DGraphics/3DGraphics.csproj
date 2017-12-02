@@ -42,21 +42,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Effects\EffectBase.cs" />
+    <Compile Include="Effects\SkyBoxShader.cs" />
     <Compile Include="Lights.cs" />
+    <Compile Include="Objects\Commons\Base.cs" />
     <Compile Include="Objects\Boat.cs" />
+    <Compile Include="Objects\Commons\IModelObject.cs" />
+    <Compile Include="Objects\Commons\Model.cs" />
     <Compile Include="Objects\Flag.cs" />
     <Compile Include="Objects\Island.cs" />
     <Compile Include="Objects\Commons\ITextured.cs" />
     <Compile Include="Objects\Lighthouse.cs" />
-    <Compile Include="Objects\ModelObject.cs" />
-    <Compile Include="Objects\ObjectBase.cs" />
+    <Compile Include="Objects\Commons\ModelPhongObject.cs" />
+    <Compile Include="Objects\Commons\PhongObject.cs" />
     <Compile Include="Objects\Sea.cs" />
     <Compile Include="Objects\Commons\Textured.cs" />
-    <Compile Include="Objects\TexturedVertexObject.cs" />
-    <Compile Include="Objects\TextureModel.cs" />
-    <Compile Include="Objects\VertexObject.cs" />
-    <Compile Include="PhongShader.cs" />
-    <Compile Include="VertexPositionNormalColor.cs" />
+    <Compile Include="Objects\Skybox.cs" />
+    <Compile Include="Objects\Commons\TexturedVertexPhongObject.cs" />
+    <Compile Include="Objects\Commons\TextureModelPhongObjectPhong.cs" />
+    <Compile Include="Objects\Commons\VertexPhongObject.cs" />
+    <Compile Include="Effects\PhongShader.cs" />
+    <Compile Include="Objects\Commons\VertexPositionNormalColor.cs" />
     <Compile Include="XnaFun.cs" />
     <Compile Include="Objects\PalmTree.cs" />
     <Compile Include="Program.cs" />
@@ -70,17 +76,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\boat.jpg" />
-    <Content Include="Content\Phong.fx" />
+    <Content Include="Content\Models\boat.jpg" />
+    <Content Include="Content\Islands.dds" />
+    <Content Include="Content\Shaders\SkyBoxShader.fx" />
+    <Content Include="Content\Shaders\Phong.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
-    <None Include="Content\Lighthouse_Lit.obj" />
-    <None Include="Content\Palm1.fbx" />
-    <None Include="Content\PirateFlag.obj" />
-    <None Include="Content\Row_Boat.FBX" />
+    <None Include="Content\Models\cube.fbx" />
+    <None Include="Content\Models\Lighthouse_Lit.obj" />
+    <None Include="Content\Models\Palm1.fbx" />
+    <None Include="Content\Models\PirateFlag.obj" />
+    <None Include="Content\Models\Row_Boat.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PerlinNoise\PerlinNoise.vcxproj">
@@ -89,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Images\" />
     <Folder Include="Map\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

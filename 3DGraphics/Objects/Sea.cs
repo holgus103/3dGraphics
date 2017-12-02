@@ -11,12 +11,12 @@ using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    class Sea : TexturedVertexObject
+    class Sea : TexturedVertexPhongObject
     {
         private readonly Camera camera;
         private readonly float level;
-        private const string TEXTURE_PATH = "sea1.jpg";
-        private const string MIXING_TEXTURE_PATH = "sea2.jpg";
+        private const string TEXTURE_PATH = "Content\\Images\\sea1.jpg";
+        private const string MIXING_TEXTURE_PATH = "Content\\Images\\sea2.jpg";
         private static Texture2D mixingTexture;
         private static Texture2D texture;
         protected override string Technique => "TextureTeqMixing";

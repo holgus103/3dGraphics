@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    class Boat : TextureModel
+    class Boat : TextureModelPhongObjectPhong
     {
-        private const string TEXTURE_PATH = "boat.jpg";
+        private const string TEXTURE_PATH = "Content\\Images\\boat.jpg";
         private static Model model;
         private static Texture2D texture;
 
@@ -19,11 +20,11 @@ namespace _3DGraphics.Objects
         {
             if (Boat.model == null)
             {
-                Boat.model = ctx.Load<Model>("Row_Boat");
+                Boat.model = ctx.Load<Model>("Models\\Row_Boat");
             }
         }
 
-        protected override Model Model => Boat.model;
+        public override Model Model => Boat.model;
 
         public override Texture2D Texture
         {

@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    class Island : VertexObject<VertexPositionNormalColor>
+    class Island : VertexPhongObject<VertexPositionNormalColor>
     {
         private int degree;
 
-        private Vector3 getNormalVector(Vector3 point, Vector3 n1, Vector3 n2)
+        private Vector3 getNormalVector(Vector3 point)
         {
-            var normal = Vector3.Cross(n1 - point, n2 - point);
+            var normal = new Vector3(point.X, point.Y, point.Z);
             normal.Normalize();
             return normal;
         }
@@ -53,55 +54,48 @@ namespace _3DGraphics.Objects
                 for (var j = 0; j < 90 / degree; j++)
                 {
                     var currentVertexNumber = i * 90 / degree * 6 + j * 6;
-                    var normal = this.getNormalVector(f1[0 + j], f1[1 + j], f2[0 + j]);
-                    this.vertices[currentVertexNumber] =
-                        new VertexPositionNormalColor(f1[0 + j], normal, Color.SandyBrown);
-                    this.vertices[0].Normal = new Vector3(1, 1, 1);
-                    normal = this.getNormalVector(f2[0 + j], f1[0 + j], f1[1 + j]);
-                    this.vertices[currentVertexNumber + 2] =
-                        new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f1[1 + j], f2[0 + j], f1[0 + j]);
-                    this.vertices[currentVertexNumber + 1] =
-                        new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
+                    var normal = this.getNormalVector(f1[0 + j]);
+                    this.vertices[currentVertexNumber] = new VertexPositionNormalColor(f1[0 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f2[0 + j]);
+                    this.vertices[currentVertexNumber + 2] = new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f1[1 + j]);
+                    this.vertices[currentVertexNumber + 1] = new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
 
-                    normal = this.getNormalVector(f1[1 + j], f2[1 + j], f2[0 + j]);
-                    this.vertices[currentVertexNumber + 4] =
-                        new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f2[0 + j], f1[1 + j], f2[0 + j]);
-                    this.vertices[currentVertexNumber + 3] =
-                        new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
-                    normal = this.getNormalVector(f2[1 + j], f2[0 + j], f1[1 + j]);
-                    this.vertices[currentVertexNumber + 5] =
-                        new VertexPositionNormalColor(f2[1 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f1[1 + j]);
+                    this.vertices[currentVertexNumber + 4] = new VertexPositionNormalColor(f1[1 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f2[0 + j]);
+                    this.vertices[currentVertexNumber + 3] = new VertexPositionNormalColor(f2[0 + j], normal, Color.SandyBrown);
+                    normal = this.getNormalVector(f2[1 + j]);
+                    this.vertices[currentVertexNumber + 5] = new VertexPositionNormalColor(f2[1 + j], normal, Color.SandyBrown);
                 }
 
 
             }
-            for (var i = 0; i < 360 / degree; i++)
-            {
-                var index = i * 90 / degree * 6;
-                var indexN = (i + 1) * 90 / degree * 6;
-                if (indexN > 360 / degree)
-                {
-                    indexN = 0;
-                }
-                // handle bottom
-                this.vertices[index].Normal = (this.vertices[index].Normal + this.vertices[indexN + 2].Normal + this.vertices[indexN + 3].Normal) / 3;
+            //for (var i = 0; i < 360 / degree; i++)
+            //{
+            //    var index = i * 90 / degree * 6;
+            //    var indexN = (i + 1) * 90 / degree * 6;
+            //    if (indexN > 360 / degree)
+            //    {
+            //        indexN = 0;
+            //    }
+            //    // handle bottom
+            //    this.vertices[index].Normal = (this.vertices[index].Normal + this.vertices[indexN + 2].Normal + this.vertices[indexN + 3].Normal) / 3;
 
-                for (var j = 1; j < 90 / degree; j++)
-                {
-                    var layerShift = 6 * j;
-                    this.vertices[index + layerShift].Normal = (
-                                                                   this.vertices[index + layerShift].Normal +
-                                                                   this.vertices[index + layerShift - 2].Normal +
-                                                                   this.vertices[index + layerShift - 5].Normal +
-                                                                   this.vertices[indexN + layerShift + 2].Normal +
-                                                                   this.vertices[index + layerShift + 3].Normal +
-                                                                   this.vertices[index + layerShift - 1].Normal
-                                                               ) / 6;
-                }
+            //    for (var j = 1; j < 90 / degree; j++)
+            //    {
+            //        var layerShift = 6 * j;
+            //        this.vertices[index + layerShift].Normal = (
+            //                                                       this.vertices[index + layerShift].Normal +
+            //                                                       this.vertices[index + layerShift - 2].Normal +
+            //                                                       this.vertices[index + layerShift - 5].Normal +
+            //                                                       this.vertices[indexN + layerShift + 2].Normal +
+            //                                                       this.vertices[index + layerShift + 3].Normal +
+            //                                                       this.vertices[index + layerShift - 1].Normal
+            //                                                   ) / 6;
+            //    }
 
-            }
+            //}
 
 
         }

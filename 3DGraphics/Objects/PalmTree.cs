@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    class PalmTree : ModelObject
+    class PalmTree : ModelPhongObject
     {
         private static Model model;
 
@@ -16,10 +17,10 @@ namespace _3DGraphics.Objects
         {
             if (PalmTree.model == null)
             {
-                PalmTree.model = ctx.Load<Model>("Palm1");
+                PalmTree.model = ctx.Load<Model>("Models\\Palm1");
             }
         }
 
-        protected override Model Model => PalmTree.model;
+        public override Model Model => PalmTree.model;
     }
 }
