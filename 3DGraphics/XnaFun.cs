@@ -48,6 +48,7 @@ namespace _3DGraphics
             //this.elements.Add(new Skybox(this.Content));
             //this.skybox = new Tropikalna_wyspa.Skybox("Images\\Islands", this.Content);
             this.elements.Add(new Skybox(this.Content));
+            this.elements.Add(new ReflectionSphere(this.Content, new Vector3(0, 15, -50), 5));
             base.Initialize();
         }
 

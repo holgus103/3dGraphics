@@ -179,7 +179,7 @@ float4 PixelShaderTxMixingFunction(VertexShaderOutputTx input) : COLOR0
 	float4 tex = tex2D(MixingSampler, (input.TextCoords + Displacement));
 	float4 tex2 = tex2D(TextureSampler, input.TextCoords);
 	tex = (tex + tex2) / 2;
-	tex.a = 1;
+	tex.a = 0.0f;
 	ambientSum /= LIGHTS_COUNT;
 	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
 	//return input.Color;
@@ -206,8 +206,12 @@ technique TextureTeq
 
 technique TextureTeqMixing
 {
+
 	pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		DestBlend = INVSRCALPHA;
+		SrcBlend = SRCALPHA;
 		VertexShader = compile VS_SHADERMODEL VertexShaderTxFunction();
 		PixelShader = compile PS_SHADERMODEL PixelShaderTxMixingFunction();
 	}

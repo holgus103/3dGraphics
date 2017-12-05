@@ -11,45 +11,32 @@ using _3DGraphics.Objects.Commons;
 
 namespace _3DGraphics.Objects
 {
-    class Skybox : Base, IModelObject
+    class Skybox : SkyboxBase
     {
 
         private static Model model;
-        private static TextureCube tx;
-        private static SkyBoxShader effect;
-        private float size = 50f;
+
+        //private float size = 100f;
 
         public Skybox(ContentManager ctx) : base(ctx)
         {
             model = ctx.Load<Model>("Models\\cube");
-            tx = ctx.Load<TextureCube>("Images\\Skybox");
-
         }
 
-        public Model Model => model;
-        public override EffectBase Effect => effect;
+        public override Model Model => model;
+
         protected override string Technique => "Main";
 
-        protected override void initEffect(ContentManager ctx)
-        {
-            if (effect == null)
-            {
-                effect = new SkyBoxShader(ctx);
-            }
-        }
 
-        protected override Matrix getWorldMatrix() => Matrix.CreateScale(size) * Matrix.CreateTranslation(this.position);
+
         public override void Draw(Matrix view, Matrix projection, Vector3 cameraPosition)
         {
-            effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullClockwiseFace};
+            this.Effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullClockwiseFace};
 
             this.position = cameraPosition;
             base.Draw(view, projection, cameraPosition);
-            effect.Texture = tx;
 
-            this.DrawModel(view, projection, cameraPosition);
-           
-            effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullCounterClockwiseFace};
+            this.Effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullCounterClockwiseFace};
         }
     }
 }

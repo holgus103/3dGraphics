@@ -29,10 +29,22 @@ struct VertexShaderInput
 	float4 Position : POSITION0;
 };
 
+struct VertexShaderInputEnvMapping
+{
+	float4 Position : POSITION0;
+	float3 Normal : NORMAL;
+};
+
 struct VertexShaderOutput
 {
 	float4 Position : POSITION0;
 	float3 TextureCoordinate : TEXCOORD0;
+};
+
+struct VertexShaderOutputEnvMapping
+{
+	float4 Position : POSITION0;
+	float3 Reflect: TEXCOORD0;
 };
 
 
@@ -50,9 +62,27 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	return output;
 }
 
+VertexShaderOutput VertexShaderEnvMapping(VertexShaderInputEnvMapping input)
+{
+	VertexShaderOutputEnvMapping output;
+	float3 Normal = mul(normalize(input.Normal), World);
+	float4 worldPosition = mul(input.Position, World);
+	float4 viewPosition = mul(worldPosition, View);
+	output.Position = mul(viewPosition, Projection);
+	float3 ViewDir = normalize(worldPosition - CameraPosition);
+	output.Reflect = reflect(ViewDir, Normal);
+
+	return output;
+}
+
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	return texCUBE(TextureSampler, normalize(input.TextureCoordinate));
+}
+
+float4 PixelShaderEnvMapping(VertexShaderOutputEnvMapping input) : COLOR0
+{
+	return texCUBE(TextureSampler, normalize(input.Reflect));
 }
 
 technique Main
@@ -61,5 +91,14 @@ technique Main
 	{
 		VertexShader = compile VS_SHADERMODEL VertexShaderFunction();
 		PixelShader = compile PS_SHADERMODEL PixelShaderFunction();
+	}
+};
+
+technique EnvMapping
+{
+	pass P0
+	{
+		VertexShader = compile VS_SHADERMODEL VertexShaderEnvMapping();
+		PixelShader = compile PS_SHADERMODEL PixelShaderEnvMapping();
 	}
 };

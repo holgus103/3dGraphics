@@ -47,6 +47,7 @@
     <Compile Include="Lights.cs" />
     <Compile Include="Objects\Commons\Base.cs" />
     <Compile Include="Objects\Boat.cs" />
+    <Compile Include="Objects\Commons\SkyboxBase.cs" />
     <Compile Include="Objects\Commons\IModelObject.cs" />
     <Compile Include="Objects\Commons\Model.cs" />
     <Compile Include="Objects\Flag.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Objects\Lighthouse.cs" />
     <Compile Include="Objects\Commons\ModelPhongObject.cs" />
     <Compile Include="Objects\Commons\PhongObject.cs" />
+    <Compile Include="Objects\ReflectionSphere.cs" />
     <Compile Include="Objects\Sea.cs" />
     <Compile Include="Objects\Commons\Textured.cs" />
     <Compile Include="Objects\Skybox.cs" />

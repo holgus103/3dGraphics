@@ -56,6 +56,7 @@ namespace _3DGraphics.Objects
 
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
+            effect.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             // update displacement
             displacementCounter += (float)(XnaFun.FrameTime.TotalMilliseconds / this.displacementSpeed);
             displacementCounter = displacementCounter - (int) displacementCounter;
@@ -64,6 +65,7 @@ namespace _3DGraphics.Objects
             effect.MixingTexture = currentMixingTexture;
             this.position = new Vector3(camera.Position.X, this.level, camera.Position.Z);
             base.Draw(view, projection, pos);
+            effect.GraphicsDevice.BlendState = BlendState.Opaque;
         }
 
         public override Texture2D Texture
