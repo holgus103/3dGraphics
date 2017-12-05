@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-//using Skybox = Tropikalna_wyspa.Skybox;
 
 namespace _3DGraphics
 {
@@ -13,15 +12,13 @@ namespace _3DGraphics
     /// </summary>
     public class XnaFun : Game
     {
-        GraphicsDeviceManager graphics;
+        readonly GraphicsDeviceManager graphics;
         private DateTime lastUpdate;
-        private Camera camera = new Camera(new Vector3(0, 0, 50));
+        private readonly Camera camera = new Camera(new Vector3(0, 0, 50));
 
 
-        private List<Base> elements = new List<Base>();
+        private readonly List<Base> elements = new List<Base>();
         private Sea sea;
-        private Skybox skybox;
-
         public XnaFun()
         {
             graphics = new GraphicsDeviceManager(this);
