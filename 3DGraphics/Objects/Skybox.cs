@@ -49,9 +49,12 @@ namespace _3DGraphics.Objects
         public override void Draw(Matrix view, Matrix projection, Vector3 pos)
         {
             this.position = pos;
-            effect.Texture = tx; 
+            effect.Texture = tx;
+            effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullClockwiseFace};
             base.Draw(view, projection, pos);
             this.DrawModel(view, projection, pos);
+            effect.GraphicsDevice.RasterizerState = new RasterizerState() { CullMode = CullMode.CullCounterClockwiseFace };
+
         }
     }
 }

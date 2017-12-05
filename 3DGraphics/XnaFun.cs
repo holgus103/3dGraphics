@@ -98,7 +98,7 @@ namespace _3DGraphics
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.White);
             this.camera.Draw();
 
             this.elements.ForEach(e => e.Draw(this.camera.View, this.camera.Projection, camera.Position));
