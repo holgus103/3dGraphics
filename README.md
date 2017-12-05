@@ -5,4 +5,6 @@
 - [x] Texture mixing - 3 p.
 - [x] Skybox - 3 p.
 - [x] Perlin Noise - 4 p.
-- [ ] Elliptic mirror - 5 p.
+- [x] Reflection sphere - 5 p.
+- [ ] Alpha blending 
+- [ ] Fog
