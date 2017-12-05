@@ -14,13 +14,21 @@ namespace _3DGraphics.Objects
     class Skybox : Base, IModelObject
     {
 
+        private static Model model;
+        private static TextureCube tx;
+        private static SkyBoxShader effect;
+        private float size = 50f;
+
+        public Skybox(ContentManager ctx) : base(ctx)
+        {
+            model = ctx.Load<Model>("Models\\cube");
+            tx = ctx.Load<TextureCube>("Images\\Skybox");
+
+        }
+
         public Model Model => model;
         public override EffectBase Effect => effect;
-        protected static Model model;
         protected override string Technique => "Main";
-        protected static SkyBoxShader effect;
-        protected static TextureCube tx;
-        protected float size;
 
         protected override void initEffect(ContentManager ctx)
         {
@@ -30,31 +38,18 @@ namespace _3DGraphics.Objects
             }
         }
 
-        public Skybox(ContentManager ctx, float size = 50.0f) : base(ctx)
+        protected override Matrix getWorldMatrix() => Matrix.CreateScale(size) * Matrix.CreateTranslation(this.position);
+        public override void Draw(Matrix view, Matrix projection, Vector3 cameraPosition)
         {
-            if (model == null)
-            {
-                model = ctx.Load<Model>("Models\\cube");
-            }
-            if (tx == null)
-            {
-                tx = ctx.Load<TextureCube>("Images\\Islands");
-            }
-
-        }
-
-        protected override Matrix getWorldMatrix() => Matrix.CreateScale(this.size) * Matrix.CreateTranslation(this.position);
-
-
-        public override void Draw(Matrix view, Matrix projection, Vector3 pos)
-        {
-            this.position = pos;
-            effect.Texture = tx;
             effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullClockwiseFace};
-            base.Draw(view, projection, pos);
-            this.DrawModel(view, projection, pos);
-            effect.GraphicsDevice.RasterizerState = new RasterizerState() { CullMode = CullMode.CullCounterClockwiseFace };
 
+            this.position = cameraPosition;
+            base.Draw(view, projection, cameraPosition);
+            effect.Texture = tx;
+
+            this.DrawModel(view, projection, cameraPosition);
+           
+            effect.GraphicsDevice.RasterizerState = new RasterizerState() {CullMode = CullMode.CullCounterClockwiseFace};
         }
     }
 }

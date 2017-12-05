@@ -14,10 +14,11 @@ float3 CameraPosition;
 
 texture ModelTexture;
 
-samplerCUBE  TextureSampler : register (s0) = sampler_state {
-	Texture = (ModelTexture);
-	MagFilter = Linear;
-	MinFilter = Linear;
+samplerCUBE  TextureSampler = sampler_state {
+	texture = <ModelTexture>;
+	magfilter = LINEAR;
+	minfilter = LINEAR;
+	mipfilter = LINEAR;
 	AddressU = Mirror;
 	AddressV = Mirror;
 };

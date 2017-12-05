@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+//using Skybox = Tropikalna_wyspa.Skybox;
 
 namespace _3DGraphics
 {
@@ -19,6 +20,7 @@ namespace _3DGraphics
 
         private List<Base> elements = new List<Base>();
         private Sea sea;
+        private Skybox skybox;
 
         public XnaFun()
         {
@@ -46,6 +48,8 @@ namespace _3DGraphics
             this.elements.Add(new Boat(this.Content, graphics.GraphicsDevice, new Vector3(50, 0, 0), MathHelper.ToRadians(270), 0, 0, 0.05f));
             //this.elements.Add(new Flag(this.Content, new Vector3(0, 7, 0), 0, 0, 0, 0.5f));
             this.elements.Add(new Lighthouse(this.Content, new Vector3(0, 7, 0), 0, 0, 0, 0.01f));
+            //this.elements.Add(new Skybox(this.Content));
+            //this.skybox = new Tropikalna_wyspa.Skybox("Images\\Islands", this.Content);
             this.elements.Add(new Skybox(this.Content));
             base.Initialize();
         }
@@ -102,6 +106,7 @@ namespace _3DGraphics
             this.camera.Draw();
 
             this.elements.ForEach(e => e.Draw(this.camera.View, this.camera.Projection, camera.Position));
+
 
             base.Draw(gameTime);
         }
