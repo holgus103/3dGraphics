@@ -6,5 +6,5 @@
 - [x] Skybox - 3 p.
 - [x] Perlin Noise - 4 p.
 - [x] Reflection sphere - 5 p.
-- [ ] Alpha blending 
+- [x] Alpha blending 
 - [ ] Fog
