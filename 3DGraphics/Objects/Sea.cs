@@ -106,7 +106,7 @@ namespace _3DGraphics.Objects
 
         private void IncreaseWaveSpeed() =>
             this.ensureKeyRelease(
-                () => this.displacementSpeed -=  this.displacementSpeed > 0 ? 1000 : 0,
+                () => this.displacementSpeed -=  this.displacementSpeed > 1000 ? 1000 : 0,
                 ref this.plusDown,
                 Keys.OemPlus
                 );

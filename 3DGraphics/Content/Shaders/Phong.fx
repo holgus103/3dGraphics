@@ -195,7 +195,7 @@ float4 PixelShaderTxMixingFunction(VertexShaderOutputTx input) : COLOR0
 	tex = (tex + tex2) / 2;
 	ambientSum /= LIGHTS_COUNT;
 	float4 c = float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
-	c.a = 0.75f;
+	c.a = 0.3f;
 	return c;
 }
 
