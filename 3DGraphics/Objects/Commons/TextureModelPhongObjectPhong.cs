@@ -6,6 +6,7 @@ namespace _3DGraphics.Objects.Commons
 {
     abstract class TextureModelPhongObjectPhong : ModelPhongObject, ITextured
     {
+        protected override string Technique => "TextureTeq";
         public abstract Texture2D Texture { get; set; }
 
         protected TextureModelPhongObjectPhong(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation, float scale, string texturePath) : base(ctx, position, xRotation, yRotation, zRotation, scale)

@@ -90,6 +90,20 @@ struct VertexShaderOutputTx
 	float3 WorldPos : TEXCOORD1;
 };
 
+VertexShaderOutput VertexShaderFunctionNoTexModel(VertexShaderInputTx input)
+{
+	VertexShaderOutput output;
+
+	float4 worldPosition = mul(input.Position, World);
+	float4 viewPosition = mul(worldPosition, View);
+	output.Position = mul(viewPosition, Projection);
+	output.Color = float4(1, 0, 0, 1);
+	output.Normal = mul(input.Normal, World);
+	output.WorldPos = worldPosition;
+
+	return output;
+}
+
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
 	VertexShaderOutput output;
@@ -179,11 +193,10 @@ float4 PixelShaderTxMixingFunction(VertexShaderOutputTx input) : COLOR0
 	float4 tex = tex2D(MixingSampler, (input.TextCoords + Displacement));
 	float4 tex2 = tex2D(TextureSampler, input.TextCoords);
 	tex = (tex + tex2) / 2;
-	tex.a = 0.0f;
 	ambientSum /= LIGHTS_COUNT;
-	return float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
-	//return input.Color;
-	//return float4(1,0,0,1);
+	float4 c = float4(ambientSum + diffuseSum, 1) * tex + float4(specSum, 1);
+	c.a = 0.75f;
+	return c;
 }
 
 technique NoTextureTeq
@@ -213,6 +226,16 @@ technique TextureTeqMixing
 		DestBlend = INVSRCALPHA;
 		SrcBlend = SRCALPHA;
 		VertexShader = compile VS_SHADERMODEL VertexShaderTxFunction();
+		PixelShader = compile PS_SHADERMODEL PixelShaderTxMixingFunction();
+	}
+};
+
+technique NoTexModel
+{
+
+	pass P0
+	{
+		VertexShader = compile VS_SHADERMODEL VertexShaderFunctionNoTexModel();
 		PixelShader = compile PS_SHADERMODEL PixelShaderTxMixingFunction();
 	}
 };

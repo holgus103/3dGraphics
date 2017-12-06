@@ -7,7 +7,7 @@ namespace _3DGraphics.Objects.Commons
     abstract class ModelPhongObject : PhongObject, IModelObject
     { 
         protected float scale;
-        protected override string Technique => "TextureTeq";
+        protected override string Technique => "NoTexModel";
         protected override Matrix getWorldMatrix() => Matrix.CreateScale(this.scale) * base.getWorldMatrix();
 
         public ModelPhongObject(Microsoft.Xna.Framework.Content.ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation, float scale) : base(ctx, position, xRotation, yRotation, zRotation)
