@@ -13,7 +13,7 @@ namespace _3DGraphics.Core.Objects.Commons
         public abstract Model Model { get; }
         public override EffectBase Effect => effect;
 
-        protected SkyboxBase(ContentManager ctx) : base(ctx)
+        protected SkyboxBase(ContentManager ctx) : base(ctx, Vector3.Zero, 0, 0, 0, 1)
         {
             if (tx == null)
             {

@@ -10,7 +10,7 @@ namespace _3DGraphics.Core.Objects.Commons
     {
         protected T[] vertices;
 
-        protected VertexPhongObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, position, xRotation, yRotation, zRotation)
+        protected VertexPhongObject(ContentManager ctx, GraphicsDevice dev, Vector3 position, float xRotation, float yRotation, float zRotation) : base(ctx, position, xRotation, yRotation, zRotation, 1)
         {
             //var basicEffectVertexDeclaration = new VertexDeclaration(VertexPositionNormalColor.VertexElements);
 
@@ -24,7 +24,7 @@ namespace _3DGraphics.Core.Objects.Commons
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                effect.GraphicsDevice.DrawUserIndexedPrimitives<T>(PrimitiveType.TriangleList, this.vertices, 0,this.vertices.Length, Enumerable.Range(0, this.vertices.Length).ToArray(), 0, this.vertices.Length / 3);
+                Effect.GraphicsDevice.DrawUserIndexedPrimitives<T>(PrimitiveType.TriangleList, this.vertices, 0,this.vertices.Length, Enumerable.Range(0, this.vertices.Length).ToArray(), 0, this.vertices.Length / 3);
 
             }
         }

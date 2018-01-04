@@ -10,6 +10,7 @@ namespace _3DGraphics.Core.Objects
         protected abstract string Technique { get; }
         protected Vector3 position;
         protected Matrix rotation;
+        protected float scale;
 
         protected virtual Matrix getWorldMatrix() => this.rotation * Matrix.CreateTranslation(this.position);
 
@@ -25,8 +26,11 @@ namespace _3DGraphics.Core.Objects
 
         }
 
-        protected Base(ContentManager ctx)
+        protected Base(ContentManager ctx, Vector3 position, float xRotation, float yRotation, float zRotation, float scale)
         {
+            this.scale = scale;
+            this.position = position;
+            this.rotation = Matrix.CreateRotationX(xRotation) * Matrix.CreateRotationY(yRotation) * Matrix.CreateRotationZ(zRotation);
             this.initEffect(ctx);
         }
     }

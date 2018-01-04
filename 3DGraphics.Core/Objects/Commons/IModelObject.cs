@@ -3,7 +3,7 @@ using _3DGraphics.Core.Effects;
 
 namespace _3DGraphics.Core.Objects.Commons
 {
-    interface IModelObject
+    public interface IModelObject
     {
         Model Model { get; }
         EffectBase Effect { get; }

@@ -50,7 +50,7 @@
     <Compile Include="Objects\Boat.cs" />
     <Compile Include="Objects\Commons\SkyboxBase.cs" />
     <Compile Include="Objects\Commons\IModelObject.cs" />
-    <Compile Include="Objects\Commons\Model.cs" />
+    <Compile Include="Objects\Commons\ModelObject.cs" />
     <Compile Include="Objects\Flag.cs" />
     <Compile Include="Objects\Island.cs" />
     <Compile Include="Objects\Commons\ITextured.cs" />
@@ -96,7 +96,7 @@
     <Images Include="Content\Images\sea1.jpg" />
     <Images Include="Content\Images\sea2.jpg" />
     <Images Include="Content\Images\boat.jpg" />
-	<Images Include="Content\Images\sea3.jpg" />
+    <Images Include="Content\Images\sea3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PerlinNoise\PerlinNoise.vcxproj">
@@ -117,11 +117,6 @@
   </Target>
   -->
   <Target Name="CopyContent" BeforeTargets="Build">
-
-  <Copy DestinationFolder="bin\Windows\x86\Debug\Content\Images"
-        SkipUnchangedFiles="True"
-        SourceFiles="@(Images)"
-        UseHardlinksIfPossible="True" />
-</Target>
-
+    <Copy DestinationFolder="bin\Windows\x86\Debug\Content\Images" SkipUnchangedFiles="True" SourceFiles="@(Images)" UseHardlinksIfPossible="True" />
+  </Target>
 </Project>
