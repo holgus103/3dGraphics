@@ -25,7 +25,6 @@ namespace _3DGraphics.Core
         }
 
 
-
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
