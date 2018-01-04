@@ -78,10 +78,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Images\Islands.dds" />
-    <Content Include="Content\Images\sea1.jpg" />
-    <Content Include="Content\Images\sea2.jpg" />
-    <Content Include="Content\Models\boat.jpg" />
     <Content Include="Content\Shaders\SkyBoxShader.fx" />
     <Content Include="Content\Shaders\Phong.fx" />
     <Content Include="Icon.ico" />
@@ -94,6 +90,13 @@
     <None Include="Content\Models\Palm1.fbx" />
     <None Include="Content\Models\PirateFlag.obj" />
     <None Include="Content\Models\Row_Boat.FBX" />
+  </ItemGroup>
+  <ItemGroup>
+    <Images Include="Content\Images\Skybox.dds" />
+    <Images Include="Content\Images\sea1.jpg" />
+    <Images Include="Content\Images\sea2.jpg" />
+    <Images Include="Content\Images\boat.jpg" />
+	<Images Include="Content\Images\sea3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PerlinNoise\PerlinNoise.vcxproj">
@@ -113,4 +116,12 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="CopyContent" BeforeTargets="Build">
+
+  <Copy DestinationFolder="bin\Windows\x86\Debug\Content\Images"
+        SkipUnchangedFiles="True"
+        SourceFiles="@(Images)"
+        UseHardlinksIfPossible="True" />
+</Target>
+
 </Project>
