@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Shaders/Phong.fx</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Shaders/SkyBoxShader.fx</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/cube.fbx</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/Lighthouse_Lit.obj</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/Palm1.fbx</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/PirateFlag.obj</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/Row_Boat.FBX</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Images/Islands.dds</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Images/sea1.jpg</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Images/sea2.jpg</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Images/Skybox.dds</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/sphere.fbx</File>
+  </SourceFiles>
+</SourceFileCollection>
