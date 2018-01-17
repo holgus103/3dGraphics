@@ -36,6 +36,7 @@ namespace _3DGraphics.Main
             //this.skybox = new Tropikalna_wyspa.Skybox("Images\\Islands", this.Content);
             this.elements.Add(new Skybox(this.Content));
             this.elements.Add(new ReflectionSphere(this.Content, new Vector3(0, 15, -50), 5));
+            this.elements.Add(new Sphere(this.Content, new Vector3(-20, 0, -20), 1, 10, 4));
             this.sea = new Sea(this.Content, this.camera, 4000, 0.03f, 0, graphics.GraphicsDevice, 150);
             this.elements.Add(sea);
             base.Initialize();

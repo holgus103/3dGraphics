@@ -14,5 +14,6 @@
     <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Images/Islands.dds</File>
     <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Images/Skybox.dds</File>
     <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Models/sphere.fbx</File>
+    <File>C:/Users/Kuba/Documents/Projects/3DGraphics/3DGraphics.Core/Content/Shaders/RayTracing.fx</File>
   </SourceFiles>
 </SourceFileCollection>

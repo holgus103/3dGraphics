@@ -6,6 +6,18 @@ namespace _3DGraphics.Core
 {
     public class Camera
     {
+        public float Speed
+        {
+            get
+            {
+                return this.speed;
+            }
+
+            set
+            {
+                this.speed = value;
+            }
+        }
         private float speed = 0.1f;
         private Vector3 cameraPosition = new Vector3(0, 0, 50);
         public Vector3 up = new Vector3(0, 1, 0);
@@ -44,7 +56,7 @@ namespace _3DGraphics.Core
             {
                 var mov = Vector3.Cross(this.up, this.forward);
                 mov.Normalize();
-                this.cameraPosition -= mov * step ;
+                this.cameraPosition -= mov * step;
             }
 
             if (keyboard.IsKeyDown(Keys.Right))

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace _3DGraphics.Core.Objects.Commons
 {
-    static class ModelObject
+    public static class ModelObject
     {
         public static void DrawModel(this IModelObject m, Matrix view, Matrix projection, Vector3 pos)
         {

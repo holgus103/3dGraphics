@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Effects\EffectBase.cs" />
+    <Compile Include="Effects\RayTracingEffect.cs" />
     <Compile Include="Effects\SkyBoxShader.cs" />
     <Compile Include="Lights.cs" />
     <Compile Include="Objects\Commons\Base.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Objects\Commons\VertexPositionNormalColor.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="Objects\PalmTree.cs" />
+    <Compile Include="Objects\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Shaders\RayTracing.fx" />
     <Content Include="Content\Shaders\SkyBoxShader.fx" />
     <Content Include="Content\Shaders\Phong.fx" />
     <Content Include="Icon.ico" />

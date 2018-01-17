@@ -13,7 +13,7 @@ namespace _3DGraphics.Core
     {
         protected readonly GraphicsDeviceManager graphics;
         private DateTime lastUpdate;
-        protected readonly Camera camera = new Camera(new Vector3(0, 0, 50));
+        protected readonly Camera camera = new Camera(new Vector3(0, 0, 5));
 
 
         protected readonly List<Base> elements = new List<Base>();
@@ -72,7 +72,7 @@ namespace _3DGraphics.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Green);
             this.camera.Draw();
 
             this.elements.ForEach(e => e.Draw(this.camera.View, this.camera.Projection, camera.Position));
